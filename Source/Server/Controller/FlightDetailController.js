@@ -8,7 +8,9 @@ module.exports = function(app) {
         flightDetailDAO.getFlights(req.params.bookingId, function(result) {
             if (result == -1) {
                 res.statusCode = 500;
-                return res.send('Error 500: Server error.');
+                return res.json({
+                    error : 'Error 500: Server error.'
+                });
             }
 
             res.json(result); 
@@ -19,7 +21,9 @@ module.exports = function(app) {
         flightDetailDAO.getPassengers(req.params.bookingId, function(result) {
             if (result == -1) {
                 res.statusCode = 500;
-                return res.send('Error 500: Server error.');
+                return res.json({
+                    error : 'Error 500: Server error.'
+                });
             }
 
             res.json(result); 
@@ -30,14 +34,18 @@ module.exports = function(app) {
         if(!req.body.hasOwnProperty('flightId') || !req.body.hasOwnProperty('grade') || 
            !req.body.hasOwnProperty('price')) {
             res.statusCode = 400;
-            return res.send('Error 400: Syntax incorrect.');
+            return res.json({
+                error : 'Error 400: Syntax incorrect.'
+            });
         }
 
         flightDetailDAO.addFlight(req.params.bookingId, req.body.flightId, req.body.grade, 
             req.body.price, function(result) {
             if (result == -1) {
                 res.statusCode = 500;
-                return res.send('Error 500: Server error.');
+                return res.json({
+                    error : 'Error 500: Server error.'
+                });
             }
 
             res.statusCode = 201;
@@ -48,13 +56,17 @@ module.exports = function(app) {
     app.post(url + '/:bookingId/passenger', function(req, res) {
         if(!req.body.hasOwnProperty('passenger')) {
             res.statusCode = 400;
-            return res.send('Error 400: Syntax incorrect.');
+            return res.json({
+                error : 'Error 400: Syntax incorrect.'
+            });
         }
 
         flightDetailDAO.addPassenger(req.params.bookingId, req.body.passenger, function(result) {
             if (result == -1) {
                 res.statusCode = 500;
-                return res.send('Error 500: Server error.');
+                return res.json({
+                    error : 'Error 500: Server error.'
+                });
             }
 
             res.statusCode = 201;

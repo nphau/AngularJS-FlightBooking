@@ -8,7 +8,9 @@ module.exports = function(app) {
         bookingDAO.getBookingById(req.params.bookingId, function(result) {
             if (result == -1) {
                 res.statusCode = 500;
-                return res.send('Error 500: Server error.');
+                return res.json({
+                    error : 'Error 500: Server error.'
+                });
             }
 
             res.json(result); 
@@ -19,7 +21,9 @@ module.exports = function(app) {
         bookingDAO.createBooking(function(result) {
             if (result == -1) {
                 res.statusCode = 500;
-                return res.send('Error 500: Server error.');
+                return res.json({
+                    error : 'Error 500: Server error.'
+                });
             }
 
             res.statusCode = 201;
@@ -31,7 +35,9 @@ module.exports = function(app) {
         bookingDAO.getUpdateStatus(req.params.bookingId, function(result) {
             if (result == -1) {
                 res.statusCode = 500;
-                return res.send('Error 500: Server error.');
+                return res.json({
+                    error : 'Error 500: Server error.'
+                });
             }
 
             res.json(result); 
