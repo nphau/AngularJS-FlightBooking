@@ -23,7 +23,11 @@ module.exports = function() {
 	};
 
 	FlightDAO.prototype.getDestinationAirports = function(callback) {
-	    database.collection(this.collection).aggregate({ $group : { _id : "$destination" }  }, function(err, reply) {
+	    database.collection(this.collection).aggregate({ $group : { 
+	    	_id : {
+	    		departure : "$departure",
+	    		destination : "$destination" 
+	    	} } }, function(err, reply) {
 	    	try {
 				if (err)
 					throw err;
