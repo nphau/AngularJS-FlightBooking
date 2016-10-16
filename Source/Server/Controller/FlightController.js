@@ -31,7 +31,7 @@ module.exports = function(app) {
     });
 
     app.get(url, function(req, res) {
-        flightDAO.findFlight(req.query.dep, req.query.dest, req.query.date, 
+        flightDAO.findFlight(req.query.dep, req.query.dest, req.query.time, 
             req.query.number, function(result) {
             if (result == -1) {
                 res.statusCode = 500;

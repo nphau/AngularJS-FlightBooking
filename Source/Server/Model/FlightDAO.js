@@ -44,7 +44,7 @@ module.exports = function() {
         });
 	};
 
-	FlightDAO.prototype.findFlight = function(dep, dest, date, number, callback) {
+	FlightDAO.prototype.findFlight = function(dep, dest, time, number, callback) {
 	    database.collection(this.collection).find({ 
 	    	departure : dep,
 	    	destination : dest,

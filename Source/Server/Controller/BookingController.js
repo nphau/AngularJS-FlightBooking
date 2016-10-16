@@ -32,7 +32,7 @@ module.exports = function(app) {
     });
 
     app.put(url + '/:bookingId', function(req, res) {
-        bookingDAO.getUpdateStatus(req.params.bookingId, function(result) {
+        bookingDAO.updateStatus(req.params.bookingId, function(result) {
             if (result == -1) {
                 res.statusCode = 500;
                 return res.json({
@@ -40,6 +40,7 @@ module.exports = function(app) {
                 });
             }
 
+            res.statusCode = 202;
             res.json(result); 
         });
     });

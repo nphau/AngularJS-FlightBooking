@@ -55,7 +55,7 @@ module.exports = function() {
         });
 	};
 
-	BookingDAO.prototype.getUpdateStatus = function(bookingId, callback) {
+	BookingDAO.prototype.updateStatus = function(bookingId, callback) {
 	    database.collection(this.collection).update({ bookingId : bookingId },
 	    { $set : { status : 1 } }, function(err, reply) {
 	    	try {
