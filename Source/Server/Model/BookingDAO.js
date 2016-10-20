@@ -68,7 +68,7 @@ module.exports = function() {
 				if (err)
 					throw err;
 				
-				if (reply.result.ok) 
+				if (reply.result.ok == 1) 
 		            callback({
 		            	totalCost : totalCost
 		            });
@@ -76,6 +76,7 @@ module.exports = function() {
 		        	throw err;
             }
 			catch(err) {
+				console.log(err)
 			    callback(-1);
 			}
         });
