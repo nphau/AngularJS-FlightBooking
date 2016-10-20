@@ -24,15 +24,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_margin_min"
             android:orientation="horizontal"
             android:padding="@dimen/activity_padding_min"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -51,7 +52,7 @@
                     android:gravity="center"
                     android:text="9:30p"
                     android:textColor="#ddd33d"
-                    android:textSize="32sp" />
+                    android:textSize="24sp" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/AppTheme.TextView_Title.White"
@@ -59,18 +60,19 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="YYZ, Toronta"
-                    android:textSize="24sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_min"
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="@dimen/icon_size_min"
+                        android:layout_width="@dimen/icon_size_min_ex"
                         android:layout_height="@dimen/icon_size_min_ex"
                         android:layout_gravity="center"
-                        app:srcCompat="@mipmap/ic_launcher" />
+                        app:srcCompat="@drawable/ic_vector_calender" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/AppTheme.TextView_Sub_Title.White"
@@ -83,7 +85,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -102,7 +104,7 @@
                     android:gravity="center"
                     android:text="9:30p"
                     android:textColor="#ddd33d"
-                    android:textSize="32sp" />
+                    android:textSize="24sp" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/AppTheme.TextView_Title.White"
@@ -110,18 +112,19 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="YYZ, Toronta"
-                    android:textSize="24sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_min"
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="@dimen/icon_size_min"
+                        android:layout_width="@dimen/icon_size_min_ex"
                         android:layout_height="@dimen/icon_size_min_ex"
                         android:layout_gravity="center"
-                        app:srcCompat="@mipmap/ic_launcher" />
+                        app:srcCompat="@drawable/ic_vector_calender" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/AppTheme.TextView_Sub_Title.White"
@@ -134,7 +137,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -153,7 +156,7 @@
                     android:gravity="center"
                     android:text="9:30p"
                     android:textColor="#ddd33d"
-                    android:textSize="32sp" />
+                    android:textSize="24sp" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/AppTheme.TextView_Title.White"
@@ -161,18 +164,19 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="YYZ, Toronta"
-                    android:textSize="24sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_min"
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="@dimen/icon_size_min"
+                        android:layout_width="@dimen/icon_size_min_ex"
                         android:layout_height="@dimen/icon_size_min_ex"
                         android:layout_gravity="center"
-                        app:srcCompat="@mipmap/ic_launcher" />
+                        app:srcCompat="@drawable/ic_vector_calender" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/AppTheme.TextView_Sub_Title.White"
