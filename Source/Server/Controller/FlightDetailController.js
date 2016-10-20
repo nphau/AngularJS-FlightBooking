@@ -31,15 +31,15 @@ module.exports = function(app) {
     });
 
     app.post(url + '/:bookingId/flight', function(req, res) {
-        if(!req.body.hasOwnProperty('flightId') || !req.body.hasOwnProperty('grade') || 
-           !req.body.hasOwnProperty('price')) {
+        if(!req.body.hasOwnProperty('flightId') || !req.body.hasOwnProperty('time') || 
+           !req.body.hasOwnProperty('grade') || !req.body.hasOwnProperty('price')) {
             res.statusCode = 400;
             return res.json({
                 error : 'Error 400: Syntax incorrect.'
             });
         }
 
-        flightDetailDAO.addFlight(req.params.bookingId, req.body.flightId, req.body.grade, 
+        flightDetailDAO.addFlight(req.params.bookingId, req.body.flightId, req.body.time, req.body.grade, 
             req.body.price, function(result) {
             if (result == -1) {
                 res.statusCode = 500;
