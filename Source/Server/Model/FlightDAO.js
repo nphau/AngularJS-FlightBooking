@@ -38,7 +38,7 @@ module.exports = function() {
 					arrive : []
 				};
 				for (var i = 0; i < reply.length; i++)
-					if (reply[i]._id.departure == depart)
+					if (reply[i]._id.departure.id == depart)
 						result.arrive.push(reply[i]._id.destination);
 
 	            callback(result);
