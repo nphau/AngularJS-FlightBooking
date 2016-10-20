@@ -55,16 +55,25 @@ module.exports = function() {
         });
 	};
 
-	BookingDAO.prototype.updateStatus = function(bookingId, callback) {
-	    database.collection(this.collection).update({ bookingId : bookingId },
-	    { $set : { status : 1 } }, function(err, reply) {
+	BookingDAO.prototype.updateStatus = function(bookingId, totalCost, callback) {
+		var status = 0;
+		if (totalCost > 0)
+			status = 1;
+		database.collection(this.collection).update({ bookingId : bookingId },
+	    { $set : { 
+	    	totalCost : totalCost,
+	    	status : status 
+	    } }, function(err, reply) {
 	    	try {
 				if (err)
 					throw err;
 				
-	            callback({
-	            	status : reply.result.ok
-	            });
+				if (reply.result.ok) 
+		            callback({
+		            	totalCost : totalCost
+		            });
+		        else
+		        	throw err;
             }
 			catch(err) {
 			    callback(-1);
