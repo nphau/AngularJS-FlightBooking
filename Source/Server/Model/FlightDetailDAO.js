@@ -26,7 +26,7 @@ module.exports = function() {
 				if (err)
 					throw err;
 				
-	            callback(reply.passengers);
+	            callback(reply);
             }
 			catch(err) {
 			    callback(-1);
@@ -34,10 +34,34 @@ module.exports = function() {
         });
 	};
 
-	FlightDetailDAO.prototype.addFlight = function(bookingId, flightId, grade, price, callback) {
+	FlightDetailDAO.prototype.addFlight = function(bookingId, flightId, time, grade, price, callback) {
 	    database.collection(this.collection).update({ bookingId : bookingId }, 
 	    	{ $push: { details : {
 	    		flightId : flightId,
+	    		time : time, 
+	    		grade : grade, 
+	    		price : price
+	    	} } }, function(err, reply) {
+	    	try {
+				if (err)
+					throw err;
+				
+	            if (reply.result.ok == 1)
+	            	callback({
+	            		success : true
+	            	});
+	            else
+	            	callback(-1);
+            }
+			catch(err) {
+			    callback(-1);
+			}
+        });
+
+        if (flightId2)
+        	database.collection(this.collection).update({ bookingId : bookingId }, 
+	    	{ $push: { details : {
+	    		flightId : flightId2,
 	    		time : new Date().getTime(), 
 	    		grade : grade, 
 	    		price : price
