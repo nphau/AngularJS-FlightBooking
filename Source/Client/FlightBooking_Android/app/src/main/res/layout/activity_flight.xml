@@ -58,7 +58,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@android:color/white">
+                android:background="@drawable/ic_style_button_round_none_default">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="New York"
+                    android:textSize="@dimen/text_size_x1_5" />
 
             </RelativeLayout>
 
@@ -68,7 +76,19 @@
                 android:layout_marginLeft="@dimen/margin"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_weight="1"
-                android:background="@android:color/white">
+                android:background="@drawable/ic_style_button_round_none_default">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView"
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center"
+                    android:text="Las Vegas"
+                    android:textSize="@dimen/text_size_x1_5" />
 
             </RelativeLayout>
         </LinearLayout>
@@ -170,11 +190,11 @@
             android:layout_width="wrap_content"
             android:layout_height="?actionBarSize"
             android:layout_gravity="center"
-            android:padding="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
             android:background="@drawable/ic_style_button_round_corners_default"
             android:clickable="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/margin">
 
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="@dimen/icon_size_x3"
@@ -189,10 +209,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:padding="@dimen/margin"
                 android:layout_marginLeft="@dimen/margin"
                 android:layout_marginStart="@dimen/margin"
                 android:gravity="center|start"
+                android:padding="@dimen/margin"
                 android:text="Economy"
                 android:textColor="@android:color/black"
                 app:srcCompat="@drawable/ic_vector_calender" />
@@ -214,52 +234,78 @@
                 android:background="@drawable/ic_style_button_round_corners_default"
                 android:orientation="vertical">
 
-                <Button
-                    style="@style/AppTheme.TextView_Title.White"
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#2b303d"
+                    android:gravity="center"
+                    android:text="Adults"
+                    android:textColor="@android:color/white" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/margin"
-                    android:background="@drawable/ic_style_button_round_corners_black_none"
-                    android:text="Search Flights" />
+                    android:gravity="center"
+                    android:text="1"
+                    android:textSize="@dimen/text_size_x3" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/margin"
-                android:layout_marginLeft="@dimen/margin"
                 android:layout_marginRight="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
                 android:layout_weight="1"
                 android:background="@drawable/ic_style_button_round_corners_default"
                 android:orientation="vertical">
 
-                <Button
-                    style="@style/AppTheme.TextView_Title.White"
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#2b303d"
+                    android:gravity="center"
+                    android:text="Children"
+                    android:textColor="@android:color/white" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/margin"
-                    android:background="@drawable/ic_style_button_round_corners_black_none"
-                    android:text="Search Flights" />
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="@dimen/text_size_x3" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginRight="@dimen/margin"
                 android:layout_weight="1"
                 android:background="@drawable/ic_style_button_round_corners_default"
                 android:orientation="vertical">
 
-                <Button
-                    style="@style/AppTheme.TextView_Title.White"
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#2b303d"
+                    android:gravity="center"
+                    android:text="Infants"
+                    android:textColor="@android:color/white" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/margin"
-                    android:background="@drawable/ic_style_button_round_corners_black_none"
-                    android:text="Search Flights" />
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="@dimen/text_size_x3" />
+
             </LinearLayout>
+
         </LinearLayout>
 
         <Button
