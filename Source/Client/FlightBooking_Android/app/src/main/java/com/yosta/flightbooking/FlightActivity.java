@@ -1,14 +1,14 @@
 package com.yosta.flightbooking;
 
-import android.os.Bundle;
-
 import com.yosta.flightbooking.base.ActivityBehavior;
 import com.yosta.flightbooking.model.Airports;
 import com.yosta.flightbooking.service.FlightBookingAPI;
 import com.yosta.flightbooking.service.FlightBookingAPIType;
+import com.yosta.materialspinner.MaterialSpinner;
 
 import java.net.HttpURLConnection;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,6 +16,12 @@ import retrofit2.Response;
 
 public class FlightActivity extends ActivityBehavior {
 
+
+    @BindView(R.id.spinner_arrive)
+    MaterialSpinner spinnerArrive;
+
+    @BindView(R.id.spinner_depart)
+    MaterialSpinner spinnerDepart;
 
     @Override
     public void onApplyComponents() {
@@ -30,7 +36,9 @@ public class FlightActivity extends ActivityBehavior {
                     public void onResponse(Call<Airports> call, Response<Airports> response) {
                         if (response.code() == HttpURLConnection.HTTP_OK) {
                             Airports airports = response.body();
-                            String asda = "";
+                            if (airports.hasValue()) {
+                                spinnerDepart.setItems(airports.getList());
+                            }
                         }
                     }
 
@@ -45,5 +53,6 @@ public class FlightActivity extends ActivityBehavior {
     public void onApplyData() {
         super.onApplyData();
 
+        spinnerDepart.setItems("a", "b", "c");
     }
 }

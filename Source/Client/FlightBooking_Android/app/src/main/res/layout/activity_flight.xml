@@ -47,51 +47,17 @@
             android:gravity="center"
             android:text="Smart search. Made simple" />
 
-        <LinearLayout
+        <com.yosta.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_depart"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:layout_marginTop="@dimen/margin_x2"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_style_button_round_none_default">
-
-                <android.support.v7.widget.AppCompatTextView
-                    style="@style/AppTheme.TextView_Title.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="New York"
-                    android:textSize="@dimen/text_size_x1_5" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_weight="1"
-                android:background="@drawable/ic_style_button_round_none_default">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/appCompatTextView"
-                    style="@style/AppTheme.TextView_Title.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:gravity="center"
-                    android:text="Las Vegas"
-                    android:textSize="@dimen/text_size_x1_5" />
-
-            </RelativeLayout>
-        </LinearLayout>
+        <com.yosta.materialspinner.MaterialSpinner
+            android:id="@+id/spinner_arrive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -136,8 +102,8 @@
                     android:layout_width="@dimen/icon_size_x3"
                     android:layout_height="@dimen/icon_size_x3"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin_x2"
-                    android:layout_marginStart="@dimen/margin_x2"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
                     app:srcCompat="@drawable/ic_vector_calender" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -167,8 +133,8 @@
                     android:layout_width="@dimen/icon_size_x3"
                     android:layout_height="@dimen/icon_size_x3"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin_x2"
-                    android:layout_marginStart="@dimen/margin_x2"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
                     app:srcCompat="@drawable/ic_vector_calender" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -312,7 +278,7 @@
             style="@style/AppTheme.TextView_Title.White"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin"
+            android:layout_margin="@dimen/margin_x2"
             android:background="@drawable/ic_style_button_round_corners_black_none"
             android:text="Search Flights" />
 

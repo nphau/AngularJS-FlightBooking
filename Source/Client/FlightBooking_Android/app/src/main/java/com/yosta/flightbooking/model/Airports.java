@@ -12,8 +12,18 @@ import java.util.List;
 
 public class Airports implements Serializable {
 
-    SerializedName("departs")
+    @SerializedName("depart_airports")
+    private List<Airport> airports = new ArrayList<>();
 
-    List<Airport> airportList = new ArrayList<>();
+    public List<String> getList() {
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < airports.size(); i++) {
+            res.add(airports.get(i).toString());
+        }
+        return res;
+    }
 
+    public boolean hasValue() {
+        return (airports != null && airports.size() > 0);
+    }
 }
