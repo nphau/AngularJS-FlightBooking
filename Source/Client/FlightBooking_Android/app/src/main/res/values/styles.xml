@@ -76,7 +76,7 @@
 
     <style name="AppTheme.TextView_Title.ColorPrimary" parent="AppTheme">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textSize">@dimen/text_size_x1_5</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
@@ -88,19 +88,19 @@
 
     <style name="AppTheme.TextView_Title.Bold" parent="AppTheme">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textSize">@dimen/text_size_x1_5</item>
         <item name="android:textColor">@color/colorTextColorPrimary</item>
     </style>
 
     <style name="AppTheme.TextView_Title.White" parent="AppTheme">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textSize">@dimen/text_size_x1_5</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="AppTheme.TextView_Title.Normal" parent="AppTheme">
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textSize">@dimen/text_size_x1_5</item>
         <item name="android:textColor">@color/colorTextColorPrimary</item>
     </style>
 

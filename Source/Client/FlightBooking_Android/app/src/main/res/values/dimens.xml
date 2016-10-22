@@ -25,7 +25,7 @@
     <dimen name="card_view">96dp</dimen>
     <dimen name="card_view_x4_3">128dp</dimen>
 
-    <dimen name="text_size_title">14sp</dimen>
+    <dimen name="text_size_x1_5">16sp</dimen>
     <dimen name="text_size">12sp</dimen>
     <dimen name="text_size_x2">24sp</dimen>
     <dimen name="text_size_x3">36sp</dimen>
