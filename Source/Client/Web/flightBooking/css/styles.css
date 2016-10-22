@@ -1,0 +1,327 @@
+header,
+section,
+footer,
+article{
+    display: block;
+}
+
+body {
+    color: #666666;
+    background-color: #f9f8f6;
+    //background-image: url("images/dark-wood.jpg");
+    background-position: center;
+    font-family: Georgia, Times, serif;
+    line-height: 1.4em;
+    margin: 0px;
+}
+
+// #wrapper {
+//     width: 1170px;
+//     margin: 20px auto 20px auto;
+//     //border: 2px solid #000000;
+//     background-color: #ffffff;
+// }
+
+// header {
+//     height: 160px;
+//     background-image: url("images/header.jpg");
+// }
+
+h1 {
+    text-indent: -9999px;
+    width: 940px;
+    height: 130px;
+    margin: 0px;
+}
+
+// nav,
+// footer {
+//     clear: both;
+//     color: #ffffff;
+//     background-color: #aeaca8;
+//     height: 30px;
+// }
+
+nav ul {
+    margin: 0px;
+    padding: 5px 0px 5px 30px;
+}
+
+nav li {
+    display: inline;
+    margin-right: 40px;
+    text-transform: uppercase;
+}
+
+nav li a {
+    color: #ffffff;
+}
+
+nav li a:hover,
+nav li a.current {
+    color: #000000;
+}
+
+section.bookyourtrip {
+    margin: 20px 0px 20px 20px;
+    float: left;
+    width: 940px;
+    height: 500px;
+    //border-right: 1px solid #eeeeee;
+}
+
+article {
+    clear: both;
+    overflow: auto;
+    width: 100%;
+}
+
+a {
+    color: #de6581;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: normal;
+}
+
+h2 {
+    margin: 10px 0px 5px 0px;
+    padding: 0px;
+}
+
+h3 {
+    margin: 0px 0px 10px 0px;
+    color: #de6581;
+}
+
+
+// footer {
+//     font-size: 80%;
+//     padding: 7px 0px 0px 20px;
+// }
+
+.btn-horizontal {
+    background-repeat: no-repeat;
+    height: 15px;
+    width: 15px;
+    background-position: center center;
+    display: block;
+    background-size: contain;
+    margin: 0 7px;
+}
+
+.icon-roundtrip {
+    background-image: url("images/icon_arrows.png");
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.location-picker-title {
+    position: absolute;
+    padding: 14px 14px;
+    height: 50px;
+    font-size: 16px;
+    opacity: 0.5;
+}
+
+.input-default {
+    height: 50px;
+    width: 400px !important;
+    background-color: #FFF !important;
+    border: solid #3074C5 2px !important;
+    padding: 6px 16px;
+    font-size: 18px !important;
+    font-weight: bold;
+}
+
+.input-selection-box {
+    padding: 8px 16px 8px 100px !important;
+}
+
+.selection-option {
+    height: 30px;
+    padding-left: 20px;
+}
+
+.location-picker {
+    display: inline-block;
+    //position: relative;
+    padding-right: 10px;
+}
+
+.date-picker {
+    display: inline-block;
+    margin: 0px 50px 0px 0px;
+}
+
+.people-selection-box{
+    padding: 8px 16px 8px 20px !important;
+}
+
+.ticket-selection-box{
+    padding: 8px 16px 8px 20px !important;
+}
+
+.inline-label { 
+    white-space: nowrap;
+    max-width: 30%;
+    overflow: hidden;
+    text-overflow: ellipsis;  
+    margin-right: 15%;   
+}
+
+.bookyourtrip-location-wapper, .bookyourtrip-datepicker-wrapper, .bookyourtrip-guestqualitity-wrapper{
+    max-width: 1000px;
+    margin: 30px 0px 30px 0px;
+}
+
+/*Change background color of links on hover*/
+ul.naviga-blue li a:hover, ul.naviga-blue li.active a {
+    background-color: #168fb0;
+    color: #fff;
+    text-decoration: none;
+    border-color: transparent;
+}
+/*Style the links inside the list items*/
+ul.naviga-blue li a {
+    background-color: #aeaca8;
+    color: #333;
+    font-size: 13px;
+    display: block;
+    padding: 3px 25px;
+    border-radius: 30px;
+    line-height: 23px;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+ul.naviga-blue li{
+    padding-right: 5px;
+    float: left;
+    list-style-type: none;
+    border: none !important;
+}
+
+.naviga-blue a {
+    border: 1px solid transparent;
+}
+
+ul, li {
+    list-style: none;
+    padding-left: 0;
+}
+//
+//
+//
+
+//-------------------PAGE 02-----------------------------
+.table tr.inforticket:hover{
+    background-color: blue;
+}
+.ui-widget-header {
+    background: #fe5815 none repeat scroll 0 0;
+    border: 1px solid #fe5815;
+}
+//-------------------PAGE 03-----------------------------
+#wrap {
+    background: #ffffff none repeat scroll 0 0;
+    border-bottom: 0 solid #dddede;
+    border-radius: 16px 0 4px 4px;
+    border-top: 3px solid #204d74;
+    color: #525759;
+    font-family: GraublauWeb;
+    margin: 0 auto;
+    min-height: 489px;
+    padding: 6px 20px 20px;
+    position: relative;
+}
+
+.head-title1 {
+    color: #204d74;
+    font-family: GraublauWeb;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 15px 0;
+    text-transform: uppercase;
+}
+
+.head-title2 {
+    color: #132e45;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 15px 0;
+    text-transform: uppercase;
+}
+
+.review .total-price {
+    border: 2px dashed #00AA00;
+    color: #008900;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+    padding: 15px 0;
+    text-align: center;
+}
+.common-button2 {
+    background: #fa5614;
+    background: -webkit-linear-gradient(#fa5614, #fe8858);
+    background: -o-linear-gradient(#fa5614, #fe8858);
+    background: -moz-linear-gradient(#fa5614, #fe8858);
+    background: linear-gradient(#fa5614, #fe8858);
+    border: 0 none;
+    border-radius: 3px;
+    color: #ffffff;
+    float: right;
+    font-size: 18px;
+    line-height: 28px;
+    margin: 0;
+    padding: 5px 15px;
+    text-transform: uppercase;
+}
+
+.total{
+    color: tomato;
+}
+
+#submitFlight {
+    padding: 10px 0;
+    text-align: right;
+}
+
+#submitFlight .moreScroll {
+    display: none;
+}
+
+#submitFlight.fixed {
+    border: 1px dashed rgb(237, 27, 36);
+}
+
+#submitFlight.fixed {
+    background: #f7f7f7 none repeat scroll 0 0;
+    bottom: 0;
+    color: #fe5815;
+    height: 41px;
+    left: -1px;
+    padding: 10px;
+    position: fixed;
+    text-align: center;
+    text-indent: 10px;
+    width: 100%;
+    z-index: 3;
+}
+
+#submitFlight.fixed .moreScroll {
+    display: block;
+    font-size: 17px;
+    margin: auto;
+    text-align: center;
+    width: 500px;
+}
+//-------------------PAGE 04-----------------------------
+
+//-------------------PAGE 05-----------------------------
+

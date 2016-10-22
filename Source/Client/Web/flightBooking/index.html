@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BinBoss Airline</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link type="text/css" rel="stylesheet" href="font/font-icon/font-awesome/css/font-awesome.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!--         <link type="text/css" rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css"> -->
+    <!-- <script src="animation.js" type="text/javascript" charset="utf-8" async defer></script> -->
+
+    <script src="js/animation.js" type="text/javascript" charset="utf-8" async defer></script>
+
+</head>
+
+<body>
+    <div class="container" id="wrapper">
+    <!--<div class="container" id="wrapper" ng-app="myApp" ng-controller="myCtrl">-->
+        <section class="bookyourtrip">
+            <article>
+                <div>
+                    <ul class="nav naviga-blue">
+                        <li class="active">
+                            <a>Khứ hồi</a>
+                        </li>
+                        <li class>
+                            <a>Một chiều</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bookyourtrip-location-wapper">
+                    <div class="location-picker">
+                        <div class="location-picker-title">
+                            <i class="fa fa-plane" aria-hidden="true"></i>
+                            <span>&nbsp;&nbsp;Từ</span>
+                        </div>
+                        <select class="input-default input-selection-box">
+                            <option>Hồ Chí Minh</option>
+                            <option>Hà Nội</option>
+                            <option>Đà Lạt</option>
+                            <option>Phú Quốc</option>
+                        </select>
+                    </div>
+                    <div class="location-picker" style="width: 50px;"><span class="btn-horizontal icon-roundtrip"></span></div>
+                    <div class="location-picker" >
+                        <div class="location-picker-title">
+                            <i class="fa fa-plane" aria-hidden="true"></i>
+                            <span>&nbsp;&nbsp;Đến</span>
+                        </div>
+                        <select class="input-default input-selection-box">
+                            <option>Hồ Chí Minh</option>
+                            <option>Hà Nội</option>
+                            <option>Đà Lạt</option>
+                            <option>Phú Quốc</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="bookyourtrip-datepicker-wrapper">
+                    <div class="date-picker">
+                        <div class="datepicker-title">
+                            <!-- <input type="text" name="" class="input-default" placeholder="Ngày đi"> -->
+                            <input type="text" id="depDate" name="depDate" class="flight-date hasDatepicker input-default" placeholder="Ngày đi"">
+                            <a class="fa fa-calendar" aria-hidden="true"></a>
+                        </div>
+                    </div>
+                    <div class="date-picker">
+                        <div class="datepicker-title form-group">
+                            <!-- <input type="text" name="" class="input-default" placeholder="Ngày về"> -->
+                            <input type="text" id="depDate" name="depDate" class="flight-date hasDatepicker input-default" placeholder="Ngày về"">
+                            <a class="fa fa-calendar" aria-hidden="true"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bookyourtrip-guestqualitity-wrapper">
+                    <label class="inline-label">&nbsp;&nbsp;Người lớn
+                        <select class="people-selection-box">
+                            <option selected>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </label>
+                    <label class="inline-label">&nbsp;&nbsp;Trẻ em
+                        <select class="people-selection-box">
+                            <option selected>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                        </select>
+                    </label>
+                    <label class="inline-label">&nbsp;&nbsp;Loại vé
+                        <select class="ticket-selection-box">
+                            <option selected>Y</option>
+                            <option>C</option>
+                        </select>
+                    </label>
+                </div>
+                <div style="text-align: center;">
+<!--                         <input  style="width: 200px; height:30px" type="submit" value="Tìm chuyến bay" id="submit"> -->
+                    <button style="text-transform: uppercase;" type="submit" class="btn btn-primary">
+                        <i class="fa fa-search" aria-hidden="true"></i> Tìm chuyến bay</button>
+                </div>
+            </form>
+        </article>
+    </section>
+    <!--<script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.isOneway = false;
+            $scope.test = function(value) {
+                $scope.isOneway = value;
+            }
+        });
+        </script> -->
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
