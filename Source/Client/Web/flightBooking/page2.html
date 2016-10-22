@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>BinBoss Airline</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="font/font-icon/font-awesome/css/font-awesome.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script src="js/angular.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container" ng-app="bookFlightTicket" ng-controller="validateCtrl"  ng-submit="submit()">
+        <div class="table-reponsive">
+            <div class="dapartureFlightOptions">
+                <div class="infoflight">
+                    <p>Departure Flight Options</p>
+                    <span class="label label-danger" style="margin-right:50px;">Flying From Dalat(DLI) </span>
+                    <span class="label label-danger">Flying To Hanoi(HAN)</span>
+                </div>
+                <table class="table table-condensed table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Flight</th>
+                            <th>Depart</th>
+                            <th>Type Flight</th>
+                            <th>Ticket Y</th>
+                            <th>Ticket C</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="infoticket">
+                            <td>VN100</td>
+                            <td>12:20</td>
+                            <td>
+                                <span>200</span>
+                                <span>seats</span>
+                            </td>
+                            <td>
+                                <input type="radio" name="chooseTicketA" ng-model="ticket1.price" value="3200000">
+                                <span>3.200.000</span>
+                                <span>VND</span>
+                            </td>
+                            <td>
+                                <input type="radio" name="chooseTicketA" ng-model="ticket1.price" value="2800000">
+                                <span>2.800.000</span>
+                                <span>VND</span>
+                            </td>
+                        </tr>
+                        <tr class="infoticket">
+                            <td>VN103</td>
+                            <td>16:00</td>
+                            <td>
+                                <span>100</span>
+                                <span>seats</span>
+                            </td>
+                            <td>
+                                <input type="radio" name="chooseTicketA" ng-model="ticket1.price" value="5300000">
+                                <span>5.300.000</span>
+                                <span>VND</span>
+                            </td>
+                            <td>
+                                <input type="radio" name="chooseTicketA" ng-model="ticket1.price" value="3800000">
+                                <span>3.800.000</span>
+                                <span>VND</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ReturnFlightOptions">
+              <div class="infoflight">
+                  <p>Return Flight Options</p>
+                  <span class="label label-danger" style="margin-right:50px;">Flying From Hanoi(HAN)</span>
+                  <span class="label label-danger">Flying To Dalat(DLI)</span>
+              </div>
+              <table class="table table-condensed table-striped table-hover">
+                  <thead>
+                      <tr>
+                          <th>Flight</th>
+                          <th>Depart</th>
+                          <th>Type Flight</th>
+                          <th>Ticket Y</th>
+                          <th>Ticket C</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr class="infoticket">
+                          <td>VN100</td>
+                          <td>12:20</td>
+                          <td>
+                              <span>200</span>
+                              <span>seats</span>
+                          </td>
+                          <td>
+                              <input type="radio" name="chooseTicketB" ng-model="ticket2.price" value="3200000">
+                              <span>3.200.000</span>
+                              <span>VND</span>
+                          </td>
+                          <td>
+                              <input type="radio" name="chooseTicketB" ng-model="ticket2.price" value="2800000">
+                              <span>2.800.000</span>
+                              <span>VND</span>
+                          </td>
+                      </tr>
+                      <tr class="infoticket">
+                          <td>VN103</td>
+                          <td>16:00</td>
+                          <td>
+                              <span>100</span>
+                              <span>seats</span>
+                          </td>
+                          <td>
+                              <input type="radio" name="chooseTicketB" ng-model="ticket2.price" value="5300000">
+                              <span>5.300.000</span>
+                              <span>VND</span>
+                          </td>
+                          <td>
+                              <input type="radio" name="chooseTicketB" ng-model="ticket2.price" value="3800000">
+                              <span>3.800.000</span>
+                              <span>VND</span>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-5" style="text-align:center;">
+                <button style="width:100px;" type="submit" class="btn btn-primary">
+                    <i class="fa fa-hand-o-right" aria-hidden="true"></i> Continue</button>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+    var app = angular.module('bookFlightTicket', []);
+    app.controller('validateCtrl', ['$scope', function($scope) {
+        $scope.ticket2 = {
+          fightid :'',
+          type : '',
+          price: ''
+        };
+        $scope.ticket1 = {
+          fightid : '',
+          type : '',
+          price: ''
+        };
+        $scope.listicket = [];
+
+        $scope.submit = function() {
+          $window.alert("Vui lòng chọn vé đi và vé về!");
+          if ($scope.ticket1.price && $scope.ticket2.price) {
+            $scope.list.push(this.ticket1);
+            $scope.list.push(this.ticket2);
+          }
+          else
+          {
+            if($scope.ticket1.price == null && $scope.ticket2.price == null){
+              $window.alert("Vui lòng chọn vé đi và vé về!");
+            }
+            else if($scope.ticket1.price){
+              $window.alert("Vui lòng chọn vé đi!");
+            }
+            else if($scope.ticket2.price){
+              $window.alert("Vui lòng chọn vé về!");
+            }
+            
+          }
+        };        
+    }]);
+    </script>
+</body>
+
+</html>
