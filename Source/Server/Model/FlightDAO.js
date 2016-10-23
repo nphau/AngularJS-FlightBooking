@@ -11,10 +11,10 @@ module.exports = function() {
 					throw err;
 
 				var result = {
-					depart : []
+					airports : []
 				};
 				for (var i = 0; i < reply.length; i++)
-					result.depart.push(reply[i]._id)
+					result.airports.push(reply[i]._id)
 
 	            callback(result);
             }
@@ -35,11 +35,11 @@ module.exports = function() {
 					throw err;
 
 				var result = {
-					arrive : []
+					airports : []
 				};
 				for (var i = 0; i < reply.length; i++)
 					if (reply[i]._id.departure.id == depart)
-						result.arrive.push(reply[i]._id.destination);
+						result.airports.push(reply[i]._id.destination);
 
 	            callback(result);
             }
