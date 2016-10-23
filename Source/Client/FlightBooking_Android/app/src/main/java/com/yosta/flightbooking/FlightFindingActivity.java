@@ -19,7 +19,6 @@ import com.yosta.materialdialog.TextInputDialog;
 import com.yosta.materialspinner.MaterialSpinner;
 
 import java.net.HttpURLConnection;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -74,6 +73,7 @@ public class FlightFindingActivity extends ActivityBehavior {
     private DatePickerFragment datePickerFragment;
     private TimePickerFragment timePickerFragment;
 
+    private Map<String, String> params = null;
     private int maxAdults = 1, maxChildren = 0;
 
     @Override
@@ -90,6 +90,8 @@ public class FlightFindingActivity extends ActivityBehavior {
 
         datePickerFragment = new DatePickerFragment();
         timePickerFragment = new TimePickerFragment();
+
+        params = new HashMap<>();
     }
 
     @Override
@@ -212,12 +214,12 @@ public class FlightFindingActivity extends ActivityBehavior {
     public void onFind() {
         this.progressDialog.show();
         Calendar calendar = Calendar.getInstance();
-        Map<String, String> params = new HashMap<>();
+
         params.put("depart", "SGN");
         params.put("arrive", "TBB");
         params.put("time", String.valueOf(calendar.getTime().getTime()));
-        params.put("adult", "2");
-        params.put("child", "0");
+        params.put("adult", txtAdults.getText().toString());
+        params.put("child", txtChildren.getText().toString());
 
         FlightBookingAPI.getInstance(this).callAPIFind(params, new Callback<Flights>() {
             @Override
