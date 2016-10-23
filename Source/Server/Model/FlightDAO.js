@@ -22,7 +22,7 @@ module.exports = function() {
 			    callback(-1);
 			}
         });
-	};
+	};ss
 
 	FlightDAO.prototype.getDestinationAirports = function(depart, callback) {
 	    database.collection(this.collection).aggregate({ $group : { 
@@ -66,9 +66,6 @@ module.exports = function() {
 				for (var i = 0; i < reply.length; i++) {
 					var flights = {
 						flightId : reply[i].flightId,
-						departure : reply[i].departure,
-						arrive : reply[i].destination,
-						time : reply[i].time,
 						flex : []
 					};
 
