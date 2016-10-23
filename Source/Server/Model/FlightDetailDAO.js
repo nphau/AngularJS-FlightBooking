@@ -10,8 +10,11 @@ module.exports = function() {
 	    	try {
 				if (err)
 					throw err;
-				
-	            callback(reply.details);
+				var result = {
+					flights : []
+				}
+				result.flights = reply.details
+	            callback(result);
             }
 			catch(err) {
 			    callback(-1);
