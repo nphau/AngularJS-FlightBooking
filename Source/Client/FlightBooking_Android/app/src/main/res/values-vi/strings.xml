@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Đặt vé bay nhanh</string>
+    <string name="str_round_trip">Khứ hồi</string>
+    <string name="str_one_way">Một chiều</string>
+    <string name="str_slogan">Tìm thông minh, quá đơn giản</string>
+    <string name="str_adults">Người lớn</string>
+    <string name="str_children">Trẻ em</string>
+    <string name="str_search">Tìm kiếm</string>
+</resources>

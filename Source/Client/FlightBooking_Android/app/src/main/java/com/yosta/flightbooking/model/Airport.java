@@ -11,12 +11,29 @@ import java.io.Serializable;
 public class Airport implements Serializable {
 
     @SerializedName("id")
-    private String id;
+    private String mId;
     @SerializedName("name")
-    private String name;
+    private String mName;
+
+    public Airport() {
+
+    }
+
+    public Airport(String id, String name) {
+        this.mId = id;
+        this.mName = name;
+    }
+
+    public String getId() {
+        return this.mId;
+    }
+
+    public String getName() {
+        return this.mName;
+    }
 
     @Override
     public String toString() {
-        return "(" + id + ")" + name;
+        return "(" + mId + ")" + mName;
     }
 }

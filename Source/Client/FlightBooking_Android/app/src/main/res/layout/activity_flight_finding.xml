@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/YellowDark"
-    tools:context="com.yosta.flightbooking.FlightActivity">
+    tools:context="com.yosta.flightbooking.FlightFindingActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="?actionBarSize"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_x2"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatTextView
@@ -26,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="FlightBooking"
+                android:text="@string/app_name"
                 android:textSize="@dimen/text_size_x3" />
 
             <android.support.v7.widget.AppCompatImageView
@@ -44,14 +45,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin"
             android:gravity="center"
-            android:text="Smart search. Made simple" />
+            android:text="@string/str_slogan" />
 
         <com.yosta.materialspinner.MaterialSpinner
             android:id="@+id/spinner_depart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin" />
+            android:layout_marginTop="@dimen/margin_x2" />
 
         <com.yosta.materialspinner.MaterialSpinner
             android:id="@+id/spinner_arrive"
@@ -66,26 +68,171 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rbOneWay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/str_one_way" />
+
+            <RadioButton
+                android:id="@+id/rbRoundTrip"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="One Way" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="Round Trip" />
+                android:text="@string/str_round_trip" />
         </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginRight="@dimen/margin"
+                android:layout_weight="1"
+                android:background="@drawable/ic_style_button_round_corners_default"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_size_x2"
+                    android:layout_height="@dimen/icon_size_x2"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_x2"
+                    android:layout_marginStart="@dimen/margin_x2"
+                    app:srcCompat="@drawable/ic_vector_calender_black" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txt_date_depart"
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:gravity="center|start"
+                    android:textColor="@android:color/black"
+                    app:srcCompat="@drawable/ic_vector_calender" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_weight="1"
+                android:background="@drawable/ic_style_button_round_corners_default"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_size_x2"
+                    android:layout_height="@dimen/icon_size_x2"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_x2"
+                    android:layout_marginStart="@dimen/margin_x2"
+                    app:srcCompat="@drawable/ic_vector_time" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txt_time_depart"
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:gravity="center|start"
+                    android:textColor="@android:color/black"
+                    app:srcCompat="@drawable/ic_vector_calender" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@id/layout_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginRight="@dimen/margin"
+                android:layout_weight="1"
+                android:background="@drawable/ic_style_button_round_corners_default"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_size_x2"
+                    android:layout_height="@dimen/icon_size_x2"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_x2"
+                    android:layout_marginStart="@dimen/margin_x2"
+                    app:srcCompat="@drawable/ic_vector_calender_black" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txt_date_arrive"
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:gravity="center|start"
+                    android:textColor="@android:color/black"
+                    app:srcCompat="@drawable/ic_vector_calender" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_weight="1"
+                android:background="@drawable/ic_style_button_round_corners_default"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_size_x2"
+                    android:layout_height="@dimen/icon_size_x2"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_x2"
+                    android:layout_marginStart="@dimen/margin_x2"
+                    app:srcCompat="@drawable/ic_vector_time" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txt_time_arrive"
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:gravity="center|start"
+                    android:textColor="@android:color/black"
+                    app:srcCompat="@drawable/ic_vector_calender" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
             android:weightSum="2">
 
             <LinearLayout
@@ -95,28 +242,28 @@
                 android:layout_marginRight="@dimen/margin"
                 android:layout_weight="1"
                 android:background="@drawable/ic_style_button_round_corners_default"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="@dimen/icon_size_x3"
-                    android:layout_height="@dimen/icon_size_x3"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    app:srcCompat="@drawable/ic_vector_calender" />
+                android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#2b303d"
+                    android:gravity="center"
+                    android:padding="@dimen/margin"
+                    android:text="@string/str_adults"
+                    android:textColor="@android:color/white" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txt_adults"
                     style="@style/AppTheme.TextView_Title.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:gravity="center|start"
-                    android:text="15-10-2016"
-                    android:textColor="@android:color/black"
-                    app:srcCompat="@drawable/ic_vector_calender" />
+                    android:background="@drawable/ic_style_button_round_corners_default"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:padding="@dimen/margin"
+                    android:textSize="@dimen/text_size_x3" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -126,78 +273,6 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_weight="1"
                 android:background="@drawable/ic_style_button_round_corners_default"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="@dimen/icon_size_x3"
-                    android:layout_height="@dimen/icon_size_x3"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    app:srcCompat="@drawable/ic_vector_calender" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    style="@style/AppTheme.TextView_Title.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:gravity="center|start"
-                    android:text="15-10-2016"
-                    android:textColor="@android:color/black"
-                    app:srcCompat="@drawable/ic_vector_calender" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="?actionBarSize"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/margin"
-            android:background="@drawable/ic_style_button_round_corners_default"
-            android:clickable="true"
-            android:orientation="horizontal"
-            android:padding="@dimen/margin">
-
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="@dimen/icon_size_x3"
-                android:layout_height="@dimen/icon_size_x3"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/margin_x2"
-                android:layout_marginStart="@dimen/margin_x2"
-                app:srcCompat="@drawable/ic_vector_flight_class" />
-
-            <android.support.v7.widget.AppCompatTextView
-                style="@style/AppTheme.TextView_Title.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
-                android:gravity="center|start"
-                android:padding="@dimen/margin"
-                android:text="Economy"
-                android:textColor="@android:color/black"
-                app:srcCompat="@drawable/ic_vector_calender" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginRight="@dimen/margin"
-                android:layout_weight="1"
-                android:background="@drawable/ic_style_button_round_corners_default"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatTextView
@@ -205,69 +280,19 @@
                     android:layout_height="wrap_content"
                     android:background="#2b303d"
                     android:gravity="center"
-                    android:text="Adults"
+                    android:padding="@dimen/margin"
+                    android:text="@string/str_children"
                     android:textColor="@android:color/white" />
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txt_children"
                     style="@style/AppTheme.TextView_Title.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/ic_style_button_round_corners_default"
+                    android:clickable="true"
                     android:gravity="center"
-                    android:text="1"
-                    android:textSize="@dimen/text_size_x3" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginRight="@dimen/margin"
-                android:layout_weight="1"
-                android:background="@drawable/ic_style_button_round_corners_default"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#2b303d"
-                    android:gravity="center"
-                    android:text="Children"
-                    android:textColor="@android:color/white" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    style="@style/AppTheme.TextView_Title.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textSize="@dimen/text_size_x3" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginRight="@dimen/margin"
-                android:layout_weight="1"
-                android:background="@drawable/ic_style_button_round_corners_default"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#2b303d"
-                    android:gravity="center"
-                    android:text="Infants"
-                    android:textColor="@android:color/white" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    style="@style/AppTheme.TextView_Title.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="0"
+                    android:padding="@dimen/margin"
                     android:textSize="@dimen/text_size_x3" />
 
             </LinearLayout>
@@ -275,12 +300,14 @@
         </LinearLayout>
 
         <Button
+            android:id="@id/button_ok"
             style="@style/AppTheme.TextView_Title.White"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_x2"
+            android:layout_margin="@dimen/margin"
             android:background="@drawable/ic_style_button_round_corners_black_none"
-            android:text="Search Flights" />
+            android:padding="@dimen/margin"
+            android:text="@string/str_search" />
 
     </LinearLayout>
 

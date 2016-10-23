@@ -23,9 +23,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.FullscreenTheme" />
+            android:theme="@style/AppTheme.FullscreenTheme">
+
+        </activity>
         <activity
-            android:name=".FlightActivity"
+            android:name=".FlightFindingActivity"
             android:theme="@style/AppTheme.FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

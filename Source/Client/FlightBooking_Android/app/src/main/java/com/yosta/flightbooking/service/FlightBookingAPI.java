@@ -3,17 +3,14 @@ package com.yosta.flightbooking.service;
 import android.app.Activity;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.yosta.flightbooking.model.Airport;
 import com.yosta.flightbooking.model.Airports;
-import com.yosta.flightbooking.model.Depart;
-
+import com.yosta.flightbooking.model.Flights;
+import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 /**
  * Created by Phuc-Hau Nguyen on 10/22/2016.
  */
@@ -57,15 +54,23 @@ public class FlightBookingAPI {
                 case API_GET_ARRIVE_AIRPORT: {
                     if (params.length > 0) {
                         String airportId = params[0];
-                        jsonSamples = mGson.toJson(new Depart(airportId));
-                        JsonObject object = mParser.parse(jsonSamples).getAsJsonObject();
-                        Call<Airports> getArriveAirport = this.iFlightBookingAPI.apiGetArriveAirport(object);
+                        Call<Airports> getArriveAirport = this.iFlightBookingAPI.apiGetArriveAirport(airportId);
                         getArriveAirport.enqueue(callback);
                     }
                     break;
                 }
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void callAPIFind(Map<String, String> params, Callback<Flights> callback) {
+        try {
+            Call<Flights> getDepartAirport = this.iFlightBookingAPI.apiFind(params);
+            getDepartAirport.enqueue(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }

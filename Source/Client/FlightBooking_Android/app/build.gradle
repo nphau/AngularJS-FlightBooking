@@ -29,6 +29,8 @@ dependencies {
     final SUPPORT_LIBRARY_VERSION = '25.0.0'
     final DAGGER_VERSION = '2.7'
     compile project(':materialspinner')
+    compile project(':materialdialog')
+
     testCompile 'junit:junit:4.12'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -61,4 +63,5 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
+
 }
