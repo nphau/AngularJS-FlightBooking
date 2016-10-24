@@ -31,7 +31,7 @@ module.exports = function(app) {
     });
 
     app.get(url, function(req, res) {
-        if (req.query.adult * 2 < req.query.child ) {
+        if (req.query.adult * 2 < req.query.child || req.query.adult > 6) {
             res.statusCode = 412 ;
             return res.json({
                 error : 'Error 412 : Condition failed.'
