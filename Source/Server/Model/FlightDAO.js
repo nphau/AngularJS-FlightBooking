@@ -55,8 +55,7 @@ module.exports = function() {
 
 	    database.collection(this.collection).find({ 
 	    	'departure.id' : depart,
-	    	'destination.id' : arrive,
-	    	time : parseInt(time)
+	    	'destination.id' : arrive
 	    }, { _id : false }).toArray(function(err, reply) {
 	    	try {
 				if (err)
@@ -65,29 +64,32 @@ module.exports = function() {
 				var result = {
 					flights : []
 				};	
-				for (var i = 0; i < reply.length; i++) {
-					var flights = {
-						flightId : reply[i].flightId,
-						flex : []
-					};
+				for (var i = 0; i < reply.length; i++) 
+					if (0 <= reply[i].time - parseInt(time) && reply[i].time - parseInt(time) <= 86400000) {
+						var flights = {
+							flightId : reply[i].flightId,
+							time : reply[i].time,
+							flex : []
+						};
 
-					for (var j = 0; j < reply[i].flex.length; j++) {
-						if (reply[i].flex[j].remain >= adult + child) {
-							var flex = {
-								grade : reply[i].flex[j].grade,
-								number : reply[i].flex[j].number,
-								price : reply[i].flex[j].price
-							};
-							flights.flex.push(flex);
+						for (var j = 0; j < reply[i].flex.length; j++) {
+							if (reply[i].flex[j].remain >= adult + child) {
+								var flex = {
+									grade : reply[i].flex[j].grade,
+									number : reply[i].flex[j].number,
+									price : reply[i].flex[j].price
+								};
+								flights.flex.push(flex);
+							}
 						}
-					}
 
-					if (flights.flex.length > 0)
-						result.flights.push(flights);
-		        }
+						if (flights.flex.length > 0)
+							result.flights.push(flights);
+		        	}
 		        callback(result);
             }
 			catch(err) {
+				console.log(err)
 			    callback(-1);
 			}
         });
