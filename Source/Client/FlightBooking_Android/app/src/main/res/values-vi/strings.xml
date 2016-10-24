@@ -7,4 +7,7 @@
     <string name="str_adults">Người lớn</string>
     <string name="str_children">Trẻ em</string>
     <string name="str_search">Tìm kiếm</string>
+    <string name="str_book_now">BOOK NOW</string>
+    <string name="str_arrive">ARRIVE</string>
+    <string name="str_depart">DEPART</string>
 </resources>

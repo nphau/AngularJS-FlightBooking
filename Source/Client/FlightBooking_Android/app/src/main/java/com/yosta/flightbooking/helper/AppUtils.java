@@ -17,6 +17,8 @@ import android.text.Html;
 import android.util.Base64;
 import android.view.View;
 
+import com.yosta.flightbooking.R;
+
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -96,6 +98,7 @@ public class AppUtils {
         }
         return serializable;
     }
+
     public static String[] StandardizeTime(String pattern) {
 
         String[] res = new String[4];
@@ -113,7 +116,19 @@ public class AppUtils {
     public static boolean StandardizeLoginValue(String response) {
         return Boolean.parseBoolean(response.substring((response.indexOf(':') + 2), response.length() - 1));
     }
-
+    public static boolean sendObjectThroughBundle(Context srcContext, Class destClass, String key, Serializable object, boolean isCall) {
+        try {
+            Intent intent = new Intent(srcContext, destClass);
+            intent.putExtra(key, object);
+            if (isCall) {
+                srcContext.startActivity(intent);
+                ((Activity) srcContext).overridePendingTransition(R.anim.anim_slide_in_up, R.anim.anim_slide_out_up);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public static String getKeyHash(Context context) {
 
         String keyHash = "";
@@ -131,4 +146,5 @@ public class AppUtils {
         }
         return keyHash;
     }
+
 }

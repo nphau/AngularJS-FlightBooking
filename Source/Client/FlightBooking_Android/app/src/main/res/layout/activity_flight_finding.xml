@@ -49,17 +49,29 @@
             android:gravity="center"
             android:text="@string/str_slogan" />
 
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/AppTheme.TextView_Title.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:text="From" />
+
         <com.yosta.materialspinner.MaterialSpinner
             android:id="@+id/spinner_depart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_x2" />
+            android:layout_height="match_parent" />
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/AppTheme.TextView_Title.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:text="To" />
 
         <com.yosta.materialspinner.MaterialSpinner
             android:id="@+id/spinner_arrive"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin" />
+            android:layout_height="match_parent" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -87,147 +99,66 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="?actionBarSize"
+            android:layout_weight="1"
+            android:background="@drawable/ic_style_button_round_corners_default"
+            android:clickable="true"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/icon_size_x2"
+                android:layout_height="@dimen/icon_size_x2"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_x2"
+                android:layout_marginStart="@dimen/margin_x2"
+                app:srcCompat="@drawable/ic_vector_calender_black" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_date_depart"
+                style="@style/AppTheme.TextView_Title.Bold"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginRight="@dimen/margin"
-                android:layout_weight="1"
-                android:background="@drawable/ic_style_button_round_corners_default"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="@dimen/icon_size_x2"
-                    android:layout_height="@dimen/icon_size_x2"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin_x2"
-                    android:layout_marginStart="@dimen/margin_x2"
-                    app:srcCompat="@drawable/ic_vector_calender_black" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txt_date_depart"
-                    style="@style/AppTheme.TextView_Title.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:gravity="center|start"
-                    android:textColor="@android:color/black"
-                    app:srcCompat="@drawable/ic_vector_calender" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_marginLeft="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_weight="1"
-                android:background="@drawable/ic_style_button_round_corners_default"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="@dimen/icon_size_x2"
-                    android:layout_height="@dimen/icon_size_x2"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin_x2"
-                    android:layout_marginStart="@dimen/margin_x2"
-                    app:srcCompat="@drawable/ic_vector_time" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txt_time_depart"
-                    style="@style/AppTheme.TextView_Title.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:gravity="center|start"
-                    android:textColor="@android:color/black"
-                    app:srcCompat="@drawable/ic_vector_calender" />
-            </LinearLayout>
-
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_x2"
+                android:layout_marginStart="@dimen/margin_x2"
+                android:gravity="center|start"
+                android:text="Depart (DD/MM/YYYY)"
+                android:textColor="@android:color/black"
+                app:srcCompat="@drawable/ic_vector_calender" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@id/layout_linear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?actionBarSize"
             android:layout_marginTop="@dimen/margin"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_weight="1"
+            android:background="@drawable/ic_style_button_round_corners_default"
+            android:clickable="true"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/icon_size_x2"
+                android:layout_height="@dimen/icon_size_x2"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_x2"
+                android:layout_marginStart="@dimen/margin_x2"
+                app:srcCompat="@drawable/ic_vector_calender_black" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txt_date_arrive"
+                style="@style/AppTheme.TextView_Title.Bold"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginRight="@dimen/margin"
-                android:layout_weight="1"
-                android:background="@drawable/ic_style_button_round_corners_default"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="@dimen/icon_size_x2"
-                    android:layout_height="@dimen/icon_size_x2"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin_x2"
-                    android:layout_marginStart="@dimen/margin_x2"
-                    app:srcCompat="@drawable/ic_vector_calender_black" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txt_date_arrive"
-                    style="@style/AppTheme.TextView_Title.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:gravity="center|start"
-                    android:textColor="@android:color/black"
-                    app:srcCompat="@drawable/ic_vector_calender" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_marginLeft="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_weight="1"
-                android:background="@drawable/ic_style_button_round_corners_default"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="@dimen/icon_size_x2"
-                    android:layout_height="@dimen/icon_size_x2"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin_x2"
-                    android:layout_marginStart="@dimen/margin_x2"
-                    app:srcCompat="@drawable/ic_vector_time" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txt_time_arrive"
-                    style="@style/AppTheme.TextView_Title.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:gravity="center|start"
-                    android:textColor="@android:color/black"
-                    app:srcCompat="@drawable/ic_vector_calender" />
-            </LinearLayout>
-
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_x2"
+                android:layout_marginStart="@dimen/margin_x2"
+                android:gravity="center|start"
+                android:text="Return (DD/MM/YYYY)"
+                android:textColor="@android:color/black"
+                app:srcCompat="@drawable/ic_vector_calender" />
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -245,6 +176,7 @@
                 android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#2b303d"
@@ -276,6 +208,7 @@
                 android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#2b303d"

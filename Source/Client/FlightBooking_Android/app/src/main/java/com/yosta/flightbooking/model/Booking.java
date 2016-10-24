@@ -16,8 +16,8 @@ public class Booking implements Serializable {
     @SerializedName("time")
     private long mTime;
 
-    @SerializedName("totalCost")
-    private Cost mTotalCost;
+    /*@SerializedName("totalCost")
+    private Cost mTotalCost;*/
 
     @SerializedName("status")
     private boolean mStatus;

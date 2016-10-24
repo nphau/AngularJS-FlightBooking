@@ -35,6 +35,10 @@ public class Airports implements Serializable {
         return res;
     }
 
+    public Airport getAirport(int index) {
+        return airports.get(index);
+    }
+
     public String getAirportName(int index) {
         String res = null;
         int min = 0, max = airports.size();

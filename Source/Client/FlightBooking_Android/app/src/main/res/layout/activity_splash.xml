@@ -8,6 +8,7 @@
     tools:context="com.yosta.flightbooking.SplashActivity">
 
     <LinearLayout
+        android:id="@id/layout_linear"
         android:layout_width="wrap_content"
         android:layout_height="?actionBarSize"
         android:layout_centerInParent="true"

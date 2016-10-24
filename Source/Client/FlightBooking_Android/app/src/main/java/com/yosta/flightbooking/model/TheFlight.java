@@ -18,7 +18,7 @@ public class TheFlight implements Serializable {
 
     @SerializedName("grade")
     private String mGrade;
-
+/*
     @SerializedName("price ")
-    private Cost price;
+    private Cost price;*/
 }

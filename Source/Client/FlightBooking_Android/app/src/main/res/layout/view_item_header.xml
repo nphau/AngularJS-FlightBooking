@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_height_x2"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_sample" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_height_x2"
+                android:layout_gravity="bottom"
+                android:alpha="0.6"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:padding="@dimen/margin">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:minLines="1"
+                    android:text="DESTINATION"
+                    android:textColor="@android:color/white" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:minLines="1"
+                    android:text="LONDON, UK"
+                    android:textColor="@color/Yellow" />
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/AppTheme.TextView_Title.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/Yellow"
+            android:gravity="center"
+            android:padding="@dimen/margin"
+            android:text="FLIGHT INFORMATION"
+            android:textColor="#1b1b1b" />
+
+    </LinearLayout>
+</merge>

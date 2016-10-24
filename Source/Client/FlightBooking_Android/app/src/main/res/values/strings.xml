@@ -6,4 +6,7 @@
     <string name="str_adults">Adults</string>
     <string name="str_children">Children</string>
     <string name="str_search">Search</string>
+    <string name="str_book_now">BOOK NOW</string>
+    <string name="str_arrive">ARRIVE</string>
+    <string name="str_depart">DEPART</string>
 </resources>

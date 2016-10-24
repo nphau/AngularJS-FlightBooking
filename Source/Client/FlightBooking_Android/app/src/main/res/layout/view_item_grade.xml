@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="grade"
+            type="com.yosta.flightbooking.binding.GradeInfoViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:padding="@dimen/margin"
+        android:background="@drawable/ic_style_button_round_none_black"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/AppTheme.TextView_Title.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:maxLines="2"
+                android:minLines="1"
+                android:text="@{grade.grade}" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/AppTheme.TextView_Title.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin"
+                android:gravity="center"
+                android:maxLines="2"
+                android:minLines="1"
+                android:text="@{grade.number}"
+                android:textColor="@color/Yellow" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/AppTheme.TextView_Title.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin"
+                android:gravity="center"
+                android:maxLines="2"
+                android:minLines="1"
+                android:text="@{grade.price}"
+                android:textColor="@color/Yellow" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

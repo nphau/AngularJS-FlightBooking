@@ -2,7 +2,6 @@ package com.yosta.flightbooking.service;
 
 import com.yosta.flightbooking.model.Airports;
 import com.yosta.flightbooking.model.Booking;
-import com.yosta.flightbooking.model.Cost;
 import com.yosta.flightbooking.model.Flights;
 
 import java.util.Map;
@@ -46,7 +45,7 @@ public interface IFlightBookingAPI {
     @Headers("Content-Type: application/json")
     Call<Booking> apiBooking();
 
-
+/*
     @PUT(API_BOOKING + "/{bookingId}")
-    Call<Cost> apiUpdateBooking(@Path("bookingId") String bookingId);
+    Call<Cost> apiUpdateBooking(@Path("bookingId") String bookingId);*/
 }

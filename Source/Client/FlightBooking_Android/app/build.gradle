@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'flightbooking'
+            v2SigningEnabled false
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "24.0.3"
     defaultConfig {
@@ -17,7 +23,25 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            debuggable false
+            zipAlignEnabled true
         }
+    }
+    productFlavors {
+        dev {
+            minSdkVersion 16
+        }
+        prod {
+            minSdkVersion 16
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    dataBinding {
+        enabled = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7

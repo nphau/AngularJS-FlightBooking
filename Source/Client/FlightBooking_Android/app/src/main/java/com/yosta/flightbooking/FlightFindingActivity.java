@@ -8,8 +8,10 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.yosta.flightbooking.base.ActivityBehavior;
+import com.yosta.flightbooking.helper.AppUtils;
 import com.yosta.flightbooking.helper.DatePickerFragment;
-import com.yosta.flightbooking.helper.TimePickerFragment;
+import com.yosta.flightbooking.helper.DateUtils;
+import com.yosta.flightbooking.model.Airport;
 import com.yosta.flightbooking.model.Airports;
 import com.yosta.flightbooking.model.Flights;
 import com.yosta.flightbooking.service.FlightBookingAPI;
@@ -19,9 +21,7 @@ import com.yosta.materialdialog.TextInputDialog;
 import com.yosta.materialspinner.MaterialSpinner;
 
 import java.net.HttpURLConnection;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,12 +46,6 @@ public class FlightFindingActivity extends ActivityBehavior {
     @BindView(R.id.txt_date_depart)
     AppCompatTextView txtDateDepart;
 
-    @BindView(R.id.txt_time_arrive)
-    AppCompatTextView txtTimeArrive;
-
-    @BindView(R.id.txt_time_depart)
-    AppCompatTextView txtTimeDepart;
-
     @BindView(R.id.txt_adults)
     AppCompatTextView txtAdults;
 
@@ -71,7 +65,6 @@ public class FlightFindingActivity extends ActivityBehavior {
     private Airports arriveAirports = null;
     private ProgressDialog progressDialog = null;
     private DatePickerFragment datePickerFragment;
-    private TimePickerFragment timePickerFragment;
 
     private Map<String, String> params = null;
     private int maxAdults = 1, maxChildren = 0;
@@ -89,7 +82,6 @@ public class FlightFindingActivity extends ActivityBehavior {
         arriveAirports = new Airports();
 
         datePickerFragment = new DatePickerFragment();
-        timePickerFragment = new TimePickerFragment();
 
         params = new HashMap<>();
     }
@@ -103,23 +95,7 @@ public class FlightFindingActivity extends ActivityBehavior {
         txtAdults.setText(String.valueOf(maxAdults));
         txtChildren.setText(String.valueOf(maxChildren));
 
-        onUpdateTime();
         onUpdateDepartAirport();
-    }
-
-    private void onUpdateTime() {
-
-        Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
-        String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(date);
-        String formattedTime = new SimpleDateFormat("HH:mm:ss").format(date);
-
-        txtDateDepart.setText(formattedDate);
-        txtDateArrive.setText(formattedDate);
-
-        txtTimeDepart.setText(formattedTime);
-        txtTimeArrive.setText(formattedTime);
-
     }
 
     @Override
@@ -161,7 +137,6 @@ public class FlightFindingActivity extends ActivityBehavior {
     }
 
     private void onUpdateDepartAirport() {
-        progressDialog.show();
         FlightBookingAPI.getInstance(this).callRestFulAPI(
                 FlightBookingAPIType.API_GET_DEPART_AIRPORT,
                 new Callback<Airports>() {
@@ -172,14 +147,14 @@ public class FlightFindingActivity extends ActivityBehavior {
                             if (departAirports.hasValue()) {
                                 spinnerDepart.setItems(departAirports.getList());
                             }
+                        } else {
+                            Toast.makeText(FlightFindingActivity.this, "Some things went wrong. Please check again.", Toast.LENGTH_SHORT).show();
                         }
-                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<Airports> call, Throwable t) {
-                        progressDialog.dismiss();
-                        Toast.makeText(FlightFindingActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FlightFindingActivity.this, "Some things went wrong. Please check again.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -212,23 +187,33 @@ public class FlightFindingActivity extends ActivityBehavior {
 
     @OnClick(R.id.button_ok)
     public void onFind() {
-        this.progressDialog.show();
-        Calendar calendar = Calendar.getInstance();
 
-        params.put("depart", "SGN");
-        params.put("arrive", "TBB");
-        params.put("time", String.valueOf(calendar.getTime().getTime()));
-        params.put("adult", txtAdults.getText().toString());
-        params.put("child", txtChildren.getText().toString());
+        this.progressDialog.show();
+        long time = 1475625600000L;
+
+        final Airport depart = new Airport("SGN", "Sai Gon");//departAirports.getAirport(spinnerDepart.getSelectedIndex());
+        final Airport arrive = new Airport("TBB", "Bắc Bộ");//departAirports.getAirport(spinnerDepart.getSelectedIndex());
+
+        params.put("depart", depart.getId());
+        params.put("arrive", arrive.getId());
+        params.put("time", String.valueOf(time));
+        /*params.put("adult", txtAdults.getText().toString());
+        params.put("child", txtChildren.getText().toString());*/
+        params.put("adult", String.valueOf(2));
+        params.put("child", String.valueOf(1));
 
         FlightBookingAPI.getInstance(this).callAPIFind(params, new Callback<Flights>() {
             @Override
             public void onResponse(Call<Flights> call, Response<Flights> response) {
-                progressDialog.dismiss();
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     Flights flights = response.body();
-
+                    flights.setArrive(depart);
+                    flights.setDepart(arrive);
+                    progressDialog.dismiss();
+                    AppUtils.sendObjectThroughBundle(
+                            FlightFindingActivity.this, BookActivity.class, "FLIGHTS", flights, true);
                 }
+                progressDialog.dismiss();
             }
 
             @Override
@@ -246,16 +231,6 @@ public class FlightFindingActivity extends ActivityBehavior {
         }
         if (view.getId() == R.id.txt_date_arrive) {
             datePickerFragment.showDate(getSupportFragmentManager(), txtDateArrive);
-        }
-    }
-
-    @OnClick({R.id.txt_time_depart, R.id.txt_time_arrive})
-    public void onTimePicker(View view) {
-        if (view.getId() == R.id.txt_time_depart) {
-            timePickerFragment.showTime(getSupportFragmentManager(), txtTimeDepart);
-        }
-        if (view.getId() == R.id.txt_time_arrive) {
-            timePickerFragment.showTime(getSupportFragmentManager(), txtTimeArrive);
         }
     }
 
