@@ -7,6 +7,9 @@ import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
+import com.google.gson.Gson;
+import com.yosta.flightbooking.model.FlightBooking;
+
 import java.util.Locale;
 
 /**
@@ -14,16 +17,13 @@ import java.util.Locale;
  */
 public class SharedPresUtils {
 
-    public static final String KEY_USER_ID = "KEY_USER_ID";
+
+    public static final String KEY_DEPART_TIME = "KEY_DEPART_TIME";
+    public static final String KEY_ARRIVE_TIME = "KEY_ARRIVE_TIME";
+    public static final String KEY_BOOKING_ID = "KEY_BOOKING_ID";
+    public static final String KEY_BOOKING_FLIGHT = "KEY_BOOKING_FLIGHT";
     public static final String KEY_LANGUAGE = "LANGUAGE";
-    public static final String KEY_USER_NAME = "KEY_USER_NAME";
-    public static final String KEY_USER_EMAIL = "KEY_USER_EMAIL";
-    public static final String KEY_USER_TOKEN = "KEY_USER_TOKEN";
-    public static final String KEY_USER_GENDER = "KEY_USER_GENDER";
     public static final String KEY_APP_SETTING = "KEY_APP_SETTING";
-    public static final String KEY_USER_COVER_URL = "KEY_USER_COVER_URL";
-    public static final String KEY_USER_AVATAR_URL = "KEY_USER_AVATAR_URL";
-    public static final String KEY_USER_LINK_PROFILE = "KEY_USER_LINK_PROFILE";
     public static int KEY_LANGUAGE_MODE = 1;
 
     private Context mContext;
@@ -52,6 +52,10 @@ public class SharedPresUtils {
         editor.apply();
     }
 
+    public static void saveSetting(Context context, String key, Object o) {
+        saveSetting(context, key, new Gson().toJson(o));
+    }
+
     public void changeAppLanguage() {
         try {
             saveSetting(KEY_LANGUAGE, KEY_LANGUAGE_MODE);
@@ -75,6 +79,22 @@ public class SharedPresUtils {
 
         return value;
     }
+    public long getSettingLong(String key) {
+
+        long value = 0L;
+
+        if (preferences != null && preferences.contains(key))
+            value = preferences.getLong(key, 0L);
+
+        return value;
+    }
+    public FlightBooking getSetting(String key) {
+
+        Gson gson = new Gson();
+        String json = getSettingString(key);
+        FlightBooking myObject = gson.fromJson(json, FlightBooking.class);
+        return myObject;
+    }
 
     public String onGetAppSetting() {
         return getSettingString(KEY_APP_SETTING);
@@ -85,6 +105,14 @@ public class SharedPresUtils {
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(key, value);
+        editor.apply();
+        return true;
+    }
+    public boolean saveSetting(String key, long value) {
+        if (preferences == null) return false;
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(key, value);
         editor.apply();
         return true;
     }

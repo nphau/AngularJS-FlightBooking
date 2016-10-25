@@ -3,14 +3,21 @@ package com.yosta.flightbooking.service;
 import android.app.Activity;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.yosta.flightbooking.model.Airports;
+import com.yosta.flightbooking.model.Booking;
+import com.yosta.flightbooking.model.FlightBooking;
 import com.yosta.flightbooking.model.Flights;
+import com.yosta.flightbooking.model.Success;
+
 import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 /**
  * Created by Phuc-Hau Nguyen on 10/22/2016.
  */
@@ -74,6 +81,26 @@ public class FlightBookingAPI {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public void callAPIBooking(Callback<Booking> callback) {
+        try {
+            Call<Booking> bookingCall = this.iFlightBookingAPI.apiBooking();
+            bookingCall.enqueue(callback);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void callAPIBookingFlight(String bookingId, FlightBooking flightBooking, Callback<Success> callback) {
+        try {
+            jsonSamples = mGson.toJson(flightBooking);
+            JsonObject object = mParser.parse(jsonSamples).getAsJsonObject();
+            Call<Success> bookingFlightCall = this.iFlightBookingAPI.apiBookingFlight(bookingId, object);
+            bookingFlightCall.enqueue(callback);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

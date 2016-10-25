@@ -22,6 +22,7 @@ public class Flights implements Serializable {
     @Expose(serialize = false, deserialize = false)
     private Airport mArrive = null;
 
+
     public Airport getDepart() {
         return mDepart;
     }
