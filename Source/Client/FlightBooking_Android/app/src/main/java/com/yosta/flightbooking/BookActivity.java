@@ -68,13 +68,17 @@ public class BookActivity extends AppCompatActivity {
 
     private void onApplyData() {
         this.mFlights = (Flights) AppUtils.receiveDataThroughBundle(this, "FLIGHTS");
-        if (mFlights != null) {
+        if (mFlights != null && mFlights.size() > 0) {
             gradeInfoAdapter.clear();
             mCurrentFlight = mFlights.get(0);
             gradeInfoAdapter.addGrades(mCurrentFlight.getGradeInfo());
             this.mBinding.setFlight(new FlightViewModel(this, mCurrentFlight, mFlights.getDepart().getName(), mFlights.getArrive().getName()));
 
             onGetBookingId();
+        }
+        else
+        {
+            Toast.makeText(this, "No flights", Toast.LENGTH_SHORT).show();
         }
     }
 

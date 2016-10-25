@@ -88,8 +88,14 @@ public class FlightFindingActivity extends ActivityBehavior {
         arriveAirports = new Airports();
 
         datePickerFragment = new DatePickerFragment();
-
         params = new HashMap<>();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        txtDateArrive.setText("Arrive (DD/MM/YYYY)");
+        txtDateDepart.setText("Depart (DD/MM/YYYY)");
     }
 
     @Override
@@ -191,58 +197,64 @@ public class FlightFindingActivity extends ActivityBehavior {
         }
     }
 
+    private void onFindNext(long departTime) {
+        final Airport depart = departAirports.getAirport(spinnerDepart.getSelectedIndex());
+        final Airport arrive = departAirports.getAirport(spinnerDepart.getSelectedIndex());
+
+        params.put("depart", depart.getId());
+        params.put("arrive", arrive.getId());
+        params.put("time", String.valueOf(departTime));
+        params.put("adult", txtAdults.getText().toString());
+        params.put("child", txtChildren.getText().toString());
+
+        this.progressDialog.show();
+
+        FlightBookingAPI.getInstance(this).callAPIFind(params, new Callback<Flights>() {
+            @Override
+            public void onResponse(Call<Flights> call, Response<Flights> response) {
+                int code = response.code();
+                switch (code) {
+                    case HttpURLConnection.HTTP_OK: {
+                        Flights flights = response.body();
+                        flights.setArrive(depart);
+                        flights.setDepart(arrive);
+                        sharedPresUtils.removeSettings(SharedPresUtils.KEY_ARRIVE_TIME, SharedPresUtils.KEY_DEPART_TIME);
+                        progressDialog.dismiss();
+                        AppUtils.sendObjectThroughBundle(FlightFindingActivity.this, BookActivity.class, "FLIGHTS", flights, true);
+                        break;
+                    }
+                    case HttpURLConnection.HTTP_BAD_GATEWAY: {
+                        Toast.makeText(FlightFindingActivity.this, "Bad GateWay", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<Flights> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(FlightFindingActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @OnClick(R.id.button_ok)
     public void onFind() {
 
         long departTime = this.sharedPresUtils.getSettingLong(SharedPresUtils.KEY_DEPART_TIME);
         long arriveTime = this.sharedPresUtils.getSettingLong(SharedPresUtils.KEY_ARRIVE_TIME);
 
-        if (departTime != 0 && arriveTime != 0 && arriveTime > departTime) {
-            long time = 1475625600000L;
-
-            final Airport depart = new Airport("SGN", "Sai Gon");//departAirports.getAirport(spinnerDepart.getSelectedIndex());
-            final Airport arrive = new Airport("TBB", "Bắc Bộ");//departAirports.getAirport(spinnerDepart.getSelectedIndex());
-
-            params.put("depart", depart.getId());
-            params.put("arrive", arrive.getId());
-            params.put("time", String.valueOf(time));
-            params.put("adult", txtAdults.getText().toString());
-            params.put("child", txtChildren.getText().toString());
-            params.put("adult", String.valueOf(2));
-            params.put("child", String.valueOf(1));
-
-            this.progressDialog.show();
-
-            FlightBookingAPI.getInstance(this).callAPIFind(params, new Callback<Flights>() {
-                @Override
-                public void onResponse(Call<Flights> call, Response<Flights> response) {
-                    int code = response.code();
-                    switch (code) {
-                        case HttpURLConnection.HTTP_OK: {
-                            Flights flights = response.body();
-                            flights.setArrive(depart);
-                            flights.setDepart(arrive);
-                            sharedPresUtils.removeSettings(SharedPresUtils.KEY_ARRIVE_TIME, SharedPresUtils.KEY_DEPART_TIME);
-                            progressDialog.dismiss();
-                            AppUtils.sendObjectThroughBundle(FlightFindingActivity.this, BookActivity.class, "FLIGHTS", flights, true);
-                            break;
-                        }
-                        case HttpURLConnection.HTTP_BAD_GATEWAY: {
-                            Toast.makeText(FlightFindingActivity.this, "Bad GateWay", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                    }
-                    progressDialog.dismiss();
-                }
-
-                @Override
-                public void onFailure(Call<Flights> call, Throwable t) {
-                    progressDialog.dismiss();
-                    Toast.makeText(FlightFindingActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+        if (rbOneWay.isChecked() && !rbRoundTrip.isChecked() && departTime != 0) {
+            onFindNext(departTime);
         } else {
-            Toast.makeText(this, "Please pick date!", Toast.LENGTH_SHORT).show();
+            if (!rbOneWay.isChecked() && rbRoundTrip.isChecked()) {
+                if (departTime == 0 || arriveTime == 0 || arriveTime < departTime) {
+                    Toast.makeText(this, "Some things went wrong!", Toast.LENGTH_SHORT).show();
+                } else {
+                    onFindNext(departTime);
+                }
+            }
         }
     }
 

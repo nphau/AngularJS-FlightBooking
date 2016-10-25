@@ -23,9 +23,12 @@
         <activity
             android:name=".BookActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.FullscreenTheme"></activity>
+            android:theme="@style/AppTheme.FullscreenTheme" />
         <activity
             android:name=".FlightFindingActivity"
+            android:theme="@style/AppTheme.FullscreenTheme" />
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/AppTheme.FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,9 +36,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SplashActivity"
-            android:theme="@style/AppTheme.FullscreenTheme"></activity>
     </application>
 
 </manifest>
