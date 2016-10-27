@@ -21,6 +21,8 @@ import java.util.Locale;
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     private TextView mDate;
+    private SharedPresUtils sharedPresUtils = null;
+    private String mType;
 
     @NonNull
     @Override
@@ -31,7 +33,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        // Create a new instance of DatePickerDialog and return it
+        this.sharedPresUtils = new SharedPresUtils(getActivity());
+
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
@@ -42,10 +45,13 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         calendar.set(year, month, date);
         String formattedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.getTime());
         mDate.setText(formattedDate);
+        long time = DateUtils.convertDateIntoTimestamp(calendar.getTime());
+        this.sharedPresUtils.saveSetting(this.mType, time);
     }
 
-    public void showDate(FragmentManager manager, TextView txtOut) {
-        super.show(manager,  "datePicker");
+    public void showDate(FragmentManager manager, TextView txtOut, String type) {
+        super.show(manager, "datePicker");
+        this.mType = type;
         this.mDate = txtOut;
     }
 }

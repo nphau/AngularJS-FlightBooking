@@ -34,4 +34,5 @@ public class GradeInfoViewModel extends BaseObservable {
     public String getPrice() {
         return "Price: " + String.valueOf(mGradeInfo.getPrice());
     }
+
 }

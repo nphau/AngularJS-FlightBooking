@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="flightbooking"
+            type="com.yosta.flightbooking.binding.FlightBookingViewModel" />
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_x2"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/image_height"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_sample" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/image_height"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/txt_depart_id"
+                            style="@style/AppTheme.TextView_Title.White"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/margin"
+                            android:text="@{flightbooking.departId}"
+                            android:textSize="@dimen/text_size_x3" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            style="@style/AppTheme.TextView_Title.White"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/margin"
+                            android:text="@{flightbooking.departName}" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="@dimen/icon_size_x8"
+                            android:layout_height="@dimen/icon_size_x8"
+                            android:layout_centerInParent="true"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/ic_vector_plane_white" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            style="@style/AppTheme.TextView_Title.White"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/margin"
+                            android:text="@{flightbooking.arriveId}"
+                            android:textSize="@dimen/text_size_x3" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            style="@style/AppTheme.TextView_Title.White"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/margin"
+                            android:text="@{flightbooking.arriveName}" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <RelativeLayout
+                style="@style/Style_Menu_Item.NonPress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin"
+                    android:text="@{flightbooking.flightID}" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/Style_Menu_Item.NonPress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin"
+                    android:text="@{flightbooking.time}" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/Style_Menu_Item.NonPress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin"
+                    android:text="@{flightbooking.grade}" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/Style_Menu_Item.NonPress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/AppTheme.TextView_Title.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin"
+                    android:text="@{flightbooking.cost}" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</layout>
