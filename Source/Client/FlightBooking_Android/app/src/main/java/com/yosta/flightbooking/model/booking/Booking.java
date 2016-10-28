@@ -1,4 +1,4 @@
-package com.yosta.flightbooking.model;
+package com.yosta.flightbooking.model.booking;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package com.yosta.flightbooking.helper;
+package com.yosta.flightbooking.helper.utils;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
 import com.google.gson.Gson;
-import com.yosta.flightbooking.model.FlightBooking;
+import com.yosta.flightbooking.model.flight.FlightBooking;
 
 import java.util.Locale;
 
@@ -17,7 +17,7 @@ import java.util.Locale;
  */
 public class SharedPresUtils {
 
-
+    public static final String KEY_FLIGHTS = "FLIGHTS";
     public static final String KEY_DEPART_TIME = "KEY_DEPART_TIME";
     public static final String KEY_ARRIVE_TIME = "KEY_ARRIVE_TIME";
     public static final String KEY_BOOKING_ID = "KEY_BOOKING_ID";
@@ -79,6 +79,7 @@ public class SharedPresUtils {
 
         return value;
     }
+
     public long getSettingLong(String key) {
 
         long value = 0L;
@@ -88,6 +89,7 @@ public class SharedPresUtils {
 
         return value;
     }
+
     public FlightBooking getSetting(String key) {
 
         Gson gson = new Gson();
@@ -108,6 +110,7 @@ public class SharedPresUtils {
         editor.apply();
         return true;
     }
+
     public boolean saveSetting(String key, long value) {
         if (preferences == null) return false;
 

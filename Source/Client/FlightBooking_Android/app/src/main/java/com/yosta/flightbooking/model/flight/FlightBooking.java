@@ -1,8 +1,8 @@
-package com.yosta.flightbooking.model;
+package com.yosta.flightbooking.model.flight;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.yosta.flightbooking.helper.DateUtils;
+import com.yosta.flightbooking.model.airport.Airport;
 
 import java.io.Serializable;
 
@@ -29,9 +29,6 @@ public class FlightBooking implements Serializable {
 
     @Expose(deserialize = false, serialize = false)
     private Airport mArrive;
-
-    public FlightBooking() {
-    }
 
     public FlightBooking(String flightId, String time, String grade, int price) {
         this.mFlightId = flightId;

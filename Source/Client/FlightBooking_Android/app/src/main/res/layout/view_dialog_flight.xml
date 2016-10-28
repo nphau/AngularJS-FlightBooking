@@ -7,7 +7,7 @@
 
         <variable
             name="flightbooking"
-            type="com.yosta.flightbooking.binding.FlightBookingViewModel" />
+            type="com.yosta.flightbooking.binding.viewmodel.FlightBookingVM" />
 
     </data>
 

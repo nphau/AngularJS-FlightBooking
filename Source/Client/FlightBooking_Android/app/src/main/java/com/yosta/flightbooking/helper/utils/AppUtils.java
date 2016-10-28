@@ -1,4 +1,4 @@
-package com.yosta.flightbooking.helper;
+package com.yosta.flightbooking.helper.utils;
 
 import android.app.Activity;
 import android.content.Context;

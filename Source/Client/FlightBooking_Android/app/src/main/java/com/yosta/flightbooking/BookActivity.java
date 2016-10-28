@@ -15,22 +15,24 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.yosta.flightbooking.adapter.GradeInfoAdapter;
-import com.yosta.flightbooking.binding.FlightViewModel;
+import com.yosta.flightbooking.binding.viewmodel.FlightVM;
 import com.yosta.flightbooking.databinding.ActivityBookBinding;
 import com.yosta.flightbooking.dialog.DialogFlight;
-import com.yosta.flightbooking.helper.AppUtils;
+import com.yosta.flightbooking.helper.utils.AppUtils;
 import com.yosta.flightbooking.helper.ItemClickSupport;
-import com.yosta.flightbooking.helper.SharedPresUtils;
-import com.yosta.flightbooking.model.Booking;
-import com.yosta.flightbooking.model.Flight;
-import com.yosta.flightbooking.model.FlightBooking;
-import com.yosta.flightbooking.model.Flights;
+import com.yosta.flightbooking.helper.utils.SharedPresUtils;
+import com.yosta.flightbooking.model.booking.Booking;
 import com.yosta.flightbooking.model.GradeInfo;
 import com.yosta.flightbooking.model.Success;
-import com.yosta.flightbooking.service.FlightBookingAPI;
+import com.yosta.flightbooking.model.flight.Flight;
+import com.yosta.flightbooking.model.flight.FlightBooking;
+import com.yosta.flightbooking.model.flight.Flights;
+import com.yosta.flightbooking.networking.FlightBookingAPI;
 import com.yosta.materialdialog.ProgressDialog;
 
 import java.net.HttpURLConnection;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,18 +50,24 @@ public class BookActivity extends AppCompatActivity {
     private String mBookingId = null;
     private Flight mCurrentFlight = null;
     private GradeInfo mCurrGrade = null;
-    private SharedPresUtils sharedPresUtils = null;
     private GradeInfoAdapter gradeInfoAdapter = null;
     private ActivityBookBinding mBinding = null;
     private ProgressDialog progressDialog = null;
 
+
+    /*@Inject
+    SharedPresUtils sharedPresUtils;*/
+    SharedPresUtils sharedPresUtils;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mBinding = DataBindingUtil.setContentView(this, R.layout.activity_book);
         ButterKnife.bind(this);
+
+        /*((AppConfig) getApplication()).getNetComponent().inject(this);*/
+
         this.mFlights = new Flights();
-        this.sharedPresUtils = new SharedPresUtils(this);
+
         this.gradeInfoAdapter = new GradeInfoAdapter(this);
         progressDialog = new ProgressDialog(this);
         onApplyRecyclerView();
@@ -72,12 +80,10 @@ public class BookActivity extends AppCompatActivity {
             gradeInfoAdapter.clear();
             mCurrentFlight = mFlights.get(0);
             gradeInfoAdapter.addGrades(mCurrentFlight.getGradeInfo());
-            this.mBinding.setFlight(new FlightViewModel(this, mCurrentFlight, mFlights.getDepart().getName(), mFlights.getArrive().getName()));
+            this.mBinding.setFlight(new FlightVM(mCurrentFlight, mFlights.getDepart().getName(), mFlights.getArrive().getName()));
 
             onGetBookingId();
-        }
-        else
-        {
+        } else {
             Toast.makeText(this, "No flights", Toast.LENGTH_SHORT).show();
         }
     }

@@ -1,7 +1,9 @@
-package com.yosta.flightbooking.model;
+package com.yosta.flightbooking.model.flight;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.yosta.flightbooking.model.GradeInfo;
+import com.yosta.flightbooking.model.airport.Airport;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,7 +23,6 @@ public class Flights implements Serializable {
 
     @Expose(serialize = false, deserialize = false)
     private Airport mArrive = null;
-
 
     public Airport getDepart() {
         return mDepart;

@@ -1,32 +1,37 @@
 package com.yosta.flightbooking;
 
-import android.support.v7.widget.AppCompatTextView;
+import android.databinding.DataBindingUtil;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.yosta.flightbooking.base.ActivityBehavior;
-import com.yosta.flightbooking.dialog.DialogFlight;
-import com.yosta.flightbooking.helper.AppUtils;
+import com.yosta.flightbooking.config.AppConfig;
+import com.yosta.flightbooking.databinding.ActivityFlightFindingBinding;
 import com.yosta.flightbooking.helper.DatePickerFragment;
-import com.yosta.flightbooking.helper.DateUtils;
-import com.yosta.flightbooking.helper.SharedPresUtils;
-import com.yosta.flightbooking.model.Airport;
-import com.yosta.flightbooking.model.Airports;
-import com.yosta.flightbooking.model.Flights;
-import com.yosta.flightbooking.service.FlightBookingAPI;
-import com.yosta.flightbooking.service.FlightBookingAPIType;
+import com.yosta.flightbooking.helper.utils.SharedPresUtils;
+import com.yosta.flightbooking.model.airport.Airport;
+import com.yosta.flightbooking.model.airport.Airports;
+import com.yosta.flightbooking.model.flight.Flight;
+import com.yosta.flightbooking.model.flight.Flights;
+import com.yosta.flightbooking.networking.FlightBookingAPI;
+import com.yosta.flightbooking.networking.IFlightBookingAPI;
 import com.yosta.materialdialog.ProgressDialog;
 import com.yosta.materialdialog.TextInputDialog;
 import com.yosta.materialspinner.MaterialSpinner;
 
 import java.net.HttpURLConnection;
-import java.sql.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +39,7 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class FlightFindingActivity extends ActivityBehavior {
 
@@ -43,59 +49,39 @@ public class FlightFindingActivity extends ActivityBehavior {
     @BindView(R.id.spinner_depart)
     MaterialSpinner spinnerDepart;
 
-    @BindView(R.id.txt_date_arrive)
-    AppCompatTextView txtDateArrive;
-
-    @BindView(R.id.txt_date_depart)
-    AppCompatTextView txtDateDepart;
-
-    @BindView(R.id.txt_adults)
-    AppCompatTextView txtAdults;
-
-    @BindView(R.id.txt_children)
-    AppCompatTextView txtChildren;
-
     @BindView(R.id.rbOneWay)
     RadioButton rbOneWay;
-
-    @BindView(R.id.rbRoundTrip)
-    RadioButton rbRoundTrip;
 
     @BindView(R.id.layout_linear)
     LinearLayout layoutRoundTrip;
 
-    private Airports departAirports = null;
-    private Airports arriveAirports = null;
     private ProgressDialog progressDialog = null;
     private DatePickerFragment datePickerFragment;
 
-    private Map<String, String> params = null;
-    private int maxAdults = 1, maxChildren = 0;
-    private SharedPresUtils sharedPresUtils = null;
+    private Map<String, String> mParams = null;
+    private Airports mDepartAirports = null, mArriveAirports = null;
+    private final Flight mFlight = Flight.getDefault();
+
+    @Inject
+    SharedPresUtils sharedPresUtils;
+
+    @Inject
+    Retrofit retrofit;
 
     @Override
     public void onApplyComponents() {
         super.onApplyComponents();
         setContentView(R.layout.activity_flight_finding);
-        ButterKnife.bind(this);
 
+        ActivityFlightFindingBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_flight_finding);
+        binding.setFlight(mFlight);
+        ButterKnife.bind(this);
+        ((AppConfig) getApplication()).getNetComponent().inject(this);
+
+        this.mParams = new HashMap<>();
+        datePickerFragment = new DatePickerFragment();
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(true);
-        this.sharedPresUtils = new SharedPresUtils(this);
-
-        //
-        departAirports = new Airports();
-        arriveAirports = new Airports();
-
-        datePickerFragment = new DatePickerFragment();
-        params = new HashMap<>();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        txtDateArrive.setText("Arrive (DD/MM/YYYY)");
-        txtDateDepart.setText("Depart (DD/MM/YYYY)");
     }
 
     @Override
@@ -104,8 +90,6 @@ public class FlightFindingActivity extends ActivityBehavior {
 
         spinnerDepart.setItems(Airports.getDefault());
         spinnerArrive.setItems(Airports.getDefault());
-        txtAdults.setText(String.valueOf(maxAdults));
-        txtChildren.setText(String.valueOf(maxChildren));
 
         onUpdateDepartAirport();
     }
@@ -113,118 +97,88 @@ public class FlightFindingActivity extends ActivityBehavior {
     @Override
     public void onApplyEvents() {
         super.onApplyEvents();
-        spinnerDepart.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                onUpdateArriveAirport(departAirports.getAirportId(position));
-            }
-        });
+        spinnerDepart.setOnItemSelectedListener(
+                (view, position, id, item) -> {
+                    onUpdateArriveAirport(mDepartAirports.getAirportId(position));
+                });
 
-        rbOneWay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rbOneWay.toggle();
-                if (rbOneWay.isChecked()) {
-                    rbRoundTrip.setChecked(false);
-                    layoutRoundTrip.setVisibility(View.GONE);
-                } else {
-                    rbRoundTrip.setChecked(true);
-                    layoutRoundTrip.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-        rbRoundTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rbRoundTrip.toggle();
-                if (rbRoundTrip.isChecked()) {
-                    rbOneWay.setChecked(false);
-                    layoutRoundTrip.setVisibility(View.VISIBLE);
-                } else {
-                    rbOneWay.setChecked(true);
-                    layoutRoundTrip.setVisibility(View.GONE);
-                }
-            }
-        });
+        spinnerArrive.setOnItemSelectedListener(
+                (view, position, id, item) ->
+                        mFlight.setArriveAirport(mArriveAirports.getAirport(position)));
+
+        rbOneWay.setOnCheckedChangeListener(
+                (compoundButton, b) ->
+                        layoutRoundTrip.setVisibility(b ? View.GONE : View.VISIBLE));
     }
 
     private void onUpdateDepartAirport() {
-        FlightBookingAPI.getInstance(this).callRestFulAPI(
-                FlightBookingAPIType.API_GET_DEPART_AIRPORT,
-                new Callback<Airports>() {
-                    @Override
-                    public void onResponse(Call<Airports> call, Response<Airports> response) {
-                        if (response.code() == HttpURLConnection.HTTP_OK) {
-                            departAirports = response.body();
-                            if (departAirports.hasValue()) {
-                                spinnerDepart.setItems(departAirports.getList());
-                            }
-                        } else {
-                            Toast.makeText(FlightFindingActivity.this, "Some things went wrong. Please check again.", Toast.LENGTH_SHORT).show();
-                        }
+        Call<Airports> getDepartAirport = retrofit.create(IFlightBookingAPI.class).apiGetDepartAirport();
+        getDepartAirport.enqueue(new Callback<Airports>() {
+            @Override
+            public void onResponse(Call<Airports> call, Response<Airports> response) {
+                if (response.code() == HttpURLConnection.HTTP_OK) {
+                    mDepartAirports = response.body();
+                    if (mDepartAirports.hasValue()) {
+                        spinnerDepart.setItems(mDepartAirports.getList());
+                        spinnerDepart.setSelectedIndex(0);
                     }
+                }
+            }
 
-                    @Override
-                    public void onFailure(Call<Airports> call, Throwable t) {
-                        Toast.makeText(FlightFindingActivity.this, "Some things went wrong. Please check again.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onFailure(Call<Airports> call, Throwable t) {
+                Toast.makeText(FlightFindingActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void onUpdateArriveAirport(String departAirportId) {
         progressDialog.show();
         if (departAirportId != null && !TextUtils.isEmpty(departAirportId)) {
-            FlightBookingAPI.getInstance(this).callRestFulAPI(
-                    FlightBookingAPIType.API_GET_ARRIVE_AIRPORT,
-                    new Callback<Airports>() {
-                        @Override
-                        public void onResponse(Call<Airports> call, Response<Airports> response) {
-                            if (response.code() == HttpURLConnection.HTTP_OK) {
-                                arriveAirports = response.body();
-                                if (arriveAirports.hasValue()) {
-                                    spinnerArrive.setItems(arriveAirports.getList());
-                                }
-                            }
-                            progressDialog.dismiss();
+            Call<Airports> getArriveAirport = retrofit.create(IFlightBookingAPI.class).apiGetArriveAirport(departAirportId);
+            getArriveAirport.enqueue(new Callback<Airports>() {
+                @Override
+                public void onResponse(Call<Airports> call, Response<Airports> response) {
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        mDepartAirports = response.body();
+                        if (mDepartAirports.hasValue()) {
+                            spinnerArrive.setItems(mDepartAirports.getList());
+                            spinnerArrive.setSelectedIndex(0);
                         }
+                    }
+                    progressDialog.dismiss();
+                }
 
-                        @Override
-                        public void onFailure(Call<Airports> call, Throwable t) {
-                            progressDialog.dismiss();
-                            Toast.makeText(FlightFindingActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }, departAirportId);
+                @Override
+                public void onFailure(Call<Airports> call, Throwable t) {
+                    progressDialog.dismiss();
+                }
+            });
         }
     }
 
     private void onFindNext(long departTime) {
-        final Airport depart = departAirports.getAirport(spinnerDepart.getSelectedIndex());
-        final Airport arrive = departAirports.getAirport(spinnerDepart.getSelectedIndex());
-
-        params.put("depart", depart.getId());
-        params.put("arrive", arrive.getId());
-        params.put("time", String.valueOf(departTime));
-        params.put("adult", txtAdults.getText().toString());
-        params.put("child", txtChildren.getText().toString());
 
         this.progressDialog.show();
 
-        FlightBookingAPI.getInstance(this).callAPIFind(params, new Callback<Flights>() {
+        Call<Flights> getFlights = retrofit.create(IFlightBookingAPI.class)
+                .apiFind(mFlight.getFlightParams());
+
+        getFlights.enqueue(new Callback<Flights>() {
             @Override
             public void onResponse(Call<Flights> call, Response<Flights> response) {
                 int code = response.code();
                 switch (code) {
                     case HttpURLConnection.HTTP_OK: {
                         Flights flights = response.body();
-                        flights.setArrive(depart);
-                        flights.setDepart(arrive);
-                        sharedPresUtils.removeSettings(SharedPresUtils.KEY_ARRIVE_TIME, SharedPresUtils.KEY_DEPART_TIME);
+                        /*sharedPresUtils.removeSettings(SharedPresUtils.KEY_ARRIVE_TIME,
+                                SharedPresUtils.KEY_DEPART_TIME);
+
                         progressDialog.dismiss();
-                        AppUtils.sendObjectThroughBundle(FlightFindingActivity.this, BookActivity.class, "FLIGHTS", flights, true);
+                        AppUtils.sendObjectThroughBundle(FlightFindingActivity.this, BookActivity.class, SharedPresUtils.KEY_FLIGHTS, flights, true);*/
                         break;
                     }
                     case HttpURLConnection.HTTP_BAD_GATEWAY: {
-                        Toast.makeText(FlightFindingActivity.this, "Bad GateWay", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -233,8 +187,7 @@ public class FlightFindingActivity extends ActivityBehavior {
 
             @Override
             public void onFailure(Call<Flights> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(FlightFindingActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -242,18 +195,18 @@ public class FlightFindingActivity extends ActivityBehavior {
     @OnClick(R.id.button_ok)
     public void onFind() {
 
+
+        int arriveIndex = spinnerArrive.getSelectedItemPosition();
+        int departIndex = spinnerArrive.getSelectedItemPosition();
+
         long departTime = this.sharedPresUtils.getSettingLong(SharedPresUtils.KEY_DEPART_TIME);
         long arriveTime = this.sharedPresUtils.getSettingLong(SharedPresUtils.KEY_ARRIVE_TIME);
 
-        if (rbOneWay.isChecked() && !rbRoundTrip.isChecked() && departTime != 0) {
+        if (rbOneWay.isChecked() && departTime != 0) {
             onFindNext(departTime);
         } else {
-            if (!rbOneWay.isChecked() && rbRoundTrip.isChecked()) {
-                if (departTime == 0 || arriveTime == 0 || arriveTime < departTime) {
-                    Toast.makeText(this, "Some things went wrong!", Toast.LENGTH_SHORT).show();
-                } else {
-                    onFindNext(departTime);
-                }
+            if (departTime != 0 || arriveTime != 0 || arriveTime > departTime) {
+                onFindNext(departTime);
             }
         }
     }
@@ -261,10 +214,12 @@ public class FlightFindingActivity extends ActivityBehavior {
     @OnClick({R.id.txt_date_depart, R.id.txt_date_arrive})
     public void onDatePicker(View view) {
         if (view.getId() == R.id.txt_date_depart) {
-            datePickerFragment.showDate(getSupportFragmentManager(), txtDateDepart, SharedPresUtils.KEY_DEPART_TIME);
+            datePickerFragment.showDate(getSupportFragmentManager(),
+                    mFlight, SharedPresUtils.KEY_DEPART_TIME);
         }
         if (view.getId() == R.id.txt_date_arrive) {
-            datePickerFragment.showDate(getSupportFragmentManager(), txtDateArrive, SharedPresUtils.KEY_ARRIVE_TIME);
+            datePickerFragment.showDate(getSupportFragmentManager(),
+                    mFlight, SharedPresUtils.KEY_ARRIVE_TIME);
         }
     }
 
@@ -279,8 +234,9 @@ public class FlightFindingActivity extends ActivityBehavior {
                     .setConfirmButton(android.R.string.ok, new TextInputDialog.OnTextInputConfirmListener() {
                         @Override
                         public void onTextInputConfirmed(String text) {
-                            txtAdults.setText(String.valueOf(maxAdults));
-                            txtChildren.setText(String.valueOf(maxAdults * 2));
+                            int maxAdults = Integer.parseInt(text);
+                            mFlight.setAdults(maxAdults);
+                            mFlight.setChildren(maxAdults * 2);
                         }
 
                     })
@@ -289,7 +245,7 @@ public class FlightFindingActivity extends ActivityBehavior {
                         public boolean check(String text) {
                             boolean res = false;
                             if (text.matches("\\d+")) {
-                                maxAdults = Integer.parseInt(text);
+                                int maxAdults = Integer.parseInt(text);
                                 if (maxAdults > 0 && maxAdults < 7) {
                                     res = true;
                                 }
@@ -307,19 +263,18 @@ public class FlightFindingActivity extends ActivityBehavior {
                     .setConfirmButton(android.R.string.ok, new TextInputDialog.OnTextInputConfirmListener() {
                         @Override
                         public void onTextInputConfirmed(String text) {
-                            txtChildren.setText(String.valueOf(maxChildren));
+                            int maxChildren = Integer.parseInt(text);
+                            mFlight.setChildren(maxChildren);
                         }
 
                     })
-                    .setInputFilter((maxAdults * 2) + " is maximum.", new TextInputDialog.TextFilter() {
+                    .setInputFilter((mFlight.getAdults() * 2) + " is maximum.", new TextInputDialog.TextFilter() {
                         @Override
                         public boolean check(String text) {
                             boolean res = false;
                             if (text.matches("\\d+")) {
-                                maxChildren = Integer.parseInt(text);
-                                if (maxChildren >= 0 && maxChildren <= maxAdults * 2) {
-                                    res = true;
-                                }
+                                int maxChildren = Integer.parseInt(text);
+                                res = (maxChildren >= 0 && maxChildren <= mFlight.getAdults() * 2);
                             }
                             return res;
                         }

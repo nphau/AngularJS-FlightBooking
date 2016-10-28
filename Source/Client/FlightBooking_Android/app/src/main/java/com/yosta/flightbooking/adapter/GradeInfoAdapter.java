@@ -5,14 +5,11 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.yosta.flightbooking.BR;
 import com.yosta.flightbooking.R;
-import com.yosta.flightbooking.binding.GradeInfoViewModel;
+import com.yosta.flightbooking.binding.viewmodel.GradeInfoVM;
 import com.yosta.flightbooking.databinding.ViewItemGradeBinding;
-import com.yosta.flightbooking.model.FlightBooking;
 import com.yosta.flightbooking.model.GradeInfo;
 
 import java.util.ArrayList;
@@ -46,7 +43,7 @@ public class GradeInfoAdapter extends RecyclerView.Adapter<GradeInfoAdapter.Bind
     public void onBindViewHolder(BindingHolder holder, int position) {
         ViewItemGradeBinding gradeBinding = (ViewItemGradeBinding) holder.binding;
         GradeInfo gradeInfo = mGradeInfos.get(position);
-        gradeBinding.setGrade(new GradeInfoViewModel(mContext, gradeInfo));
+        gradeBinding.setGrade(new GradeInfoVM(mContext, gradeInfo));
     }
 
     @Override

@@ -1,10 +1,10 @@
-package com.yosta.flightbooking.service;
+package com.yosta.flightbooking.networking;
 
 import com.google.gson.JsonObject;
-import com.yosta.flightbooking.model.Airports;
-import com.yosta.flightbooking.model.Booking;
-import com.yosta.flightbooking.model.Flights;
+import com.yosta.flightbooking.model.airport.Airports;
+import com.yosta.flightbooking.model.booking.Booking;
 import com.yosta.flightbooking.model.Success;
+import com.yosta.flightbooking.model.flight.Flights;
 
 import java.util.Map;
 

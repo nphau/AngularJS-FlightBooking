@@ -1,19 +1,19 @@
-package com.yosta.flightbooking.binding;
+package com.yosta.flightbooking.binding.viewmodel;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.yosta.flightbooking.model.FlightBooking;
+import com.yosta.flightbooking.model.flight.FlightBooking;
 
 /**
  * Created by Phuc-Hau Nguyen on 10/24/2016.
  */
 
-public class FlightBookingViewModel extends BaseObservable {
+public class FlightBookingVM extends BaseObservable {
 
     private FlightBooking mFlightBooking = null;
 
-    public FlightBookingViewModel(FlightBooking mFlightBooking) {
+    public FlightBookingVM(FlightBooking mFlightBooking) {
         this.mFlightBooking = mFlightBooking;
     }
 

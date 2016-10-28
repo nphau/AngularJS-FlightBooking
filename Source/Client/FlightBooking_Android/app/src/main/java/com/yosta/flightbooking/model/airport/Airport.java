@@ -1,4 +1,4 @@
-package com.yosta.flightbooking.model;
+package com.yosta.flightbooking.model.airport;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -16,7 +16,6 @@ public class Airport implements Serializable {
     private String mName;
 
     public Airport() {
-
     }
 
     public Airport(String id, String name) {

@@ -5,14 +5,12 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Window;
 
 import com.yosta.flightbooking.R;
-import com.yosta.flightbooking.binding.FlightBookingViewModel;
+import com.yosta.flightbooking.binding.viewmodel.FlightBookingVM;
 import com.yosta.flightbooking.databinding.ViewDialogFlightBinding;
-import com.yosta.flightbooking.helper.SharedPresUtils;
-import com.yosta.flightbooking.model.Airport;
-import com.yosta.flightbooking.model.FlightBooking;
+import com.yosta.flightbooking.helper.utils.SharedPresUtils;
+import com.yosta.flightbooking.model.flight.FlightBooking;
 
 /**
  * Created by Phuc-Hau Nguyen on 8/31/2016.
@@ -39,6 +37,6 @@ public class DialogFlight extends Dialog {
         setContentView(binding.getRoot());
 
         flightBooking = sharedPresUtils.getSetting(SharedPresUtils.KEY_BOOKING_FLIGHT);
-        binding.setFlightbooking(new FlightBookingViewModel(flightBooking));
+        binding.setFlightbooking(new FlightBookingVM(flightBooking));
     }
 }

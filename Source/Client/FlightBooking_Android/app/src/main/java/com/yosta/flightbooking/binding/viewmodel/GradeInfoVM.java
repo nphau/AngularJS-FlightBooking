@@ -1,4 +1,4 @@
-package com.yosta.flightbooking.binding;
+package com.yosta.flightbooking.binding.viewmodel;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
@@ -10,12 +10,12 @@ import com.yosta.flightbooking.model.GradeInfo;
  * Created by Phuc-Hau Nguyen on 10/24/2016.
  */
 
-public class GradeInfoViewModel extends BaseObservable {
+public class GradeInfoVM extends BaseObservable {
 
     private Context mContext;
     private GradeInfo mGradeInfo;
 
-    public GradeInfoViewModel(Context context, GradeInfo gradeInfo) {
+    public GradeInfoVM(Context context, GradeInfo gradeInfo) {
         this.mContext = context;
         this.mGradeInfo = gradeInfo;
     }

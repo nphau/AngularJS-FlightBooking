@@ -1,15 +1,13 @@
-package com.yosta.flightbooking.service;
+package com.yosta.flightbooking.networking;
 
 import android.app.Activity;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.yosta.flightbooking.model.Airports;
-import com.yosta.flightbooking.model.Booking;
-import com.yosta.flightbooking.model.FlightBooking;
-import com.yosta.flightbooking.model.Flights;
+import com.yosta.flightbooking.model.booking.Booking;
 import com.yosta.flightbooking.model.Success;
+import com.yosta.flightbooking.model.flight.FlightBooking;
 
 import java.util.Map;
 
@@ -49,39 +47,14 @@ public class FlightBookingAPI {
         return ourInstance;
     }
 
-    public void callRestFulAPI(FlightBookingAPIType type, Callback<Airports> callback, String... params) {
-        try {
-
-            switch (type) {
-                case API_GET_DEPART_AIRPORT: {
-                    Call<Airports> getDepartAirport = this.iFlightBookingAPI.apiGetDepartAirport();
-                    getDepartAirport.enqueue(callback);
-                    break;
-                }
-                case API_GET_ARRIVE_AIRPORT: {
-                    if (params.length > 0) {
-                        String airportId = params[0];
-                        Call<Airports> getArriveAirport = this.iFlightBookingAPI.apiGetArriveAirport(airportId);
-                        getArriveAirport.enqueue(callback);
-                    }
-                    break;
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void callAPIFind(Map<String, String> params, Callback<Flights> callback) {
+    /*public void callAPIFind(Map<String, String> params, Callback<Flights> callback) {
         try {
             Call<Flights> getDepartAirport = this.iFlightBookingAPI.apiFind(params);
             getDepartAirport.enqueue(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void callAPIBooking(Callback<Booking> callback) {
         try {

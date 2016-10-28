@@ -331,6 +331,10 @@ public class MaterialSpinner extends TextView {
         setText(adapter.get(selectedIndex).toString());
     }
 
+    public int getSelectedItemPosition() {
+        return listView.getSelectedItemPosition();
+    }
+
     /**
      * Show the dropdown menu
      */
@@ -383,7 +387,6 @@ public class MaterialSpinner extends TextView {
     public void setItems(String[] items) {
         this.items = items;
     }
-
 
 
     /**
