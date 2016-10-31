@@ -24,6 +24,7 @@ module.exports = function() {
 	            callback(reply);
             }
 			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });
@@ -50,6 +51,7 @@ module.exports = function() {
 	            	callback(-1);
             }
 			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });
@@ -76,7 +78,22 @@ module.exports = function() {
 		        	throw err;
             }
 			catch(err) {
-				console.log(err)
+				console.log(err);
+			    callback(-1);
+			}
+        });
+	};
+
+	BookingDAO.prototype.getAll = function(callback) {
+	    database.collection(this.collection).find({},{ _id : false }).toArray(function(err, reply) {
+	    	try {
+				if (err)
+					throw err;
+
+	            callback(reply);
+            }
+			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });

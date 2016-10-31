@@ -19,6 +19,7 @@ module.exports = function() {
 	            callback(result);
             }
 			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });
@@ -44,6 +45,7 @@ module.exports = function() {
 	            callback(result);
             }
 			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });
@@ -89,7 +91,7 @@ module.exports = function() {
 		        callback(result);
             }
 			catch(err) {
-				console.log(err)
+				console.log(err);
 			    callback(-1);
 			}
         });
@@ -133,4 +135,218 @@ module.exports = function() {
 		
 		callback()
 	};
+
+	FlightDAO.prototype.getAll = function(callback) {
+	    database.collection(this.collection).find({},{ _id : false }).toArray(function(err, reply) {
+	    	try {
+				if (err)
+					throw err;
+
+				var result = {
+					flights : reply
+				};
+
+	            callback(result);
+            }
+			catch(err) {
+				console.log(err);
+			    callback(-1);
+			}
+        });
+	};
+
+	FlightDAO.prototype.isExist = function(flightId, time, grade, price, callback) {
+		database.collection(this.collection).find({ flightId : flightId }, 
+			{ _id : false }).toArray(function(err, reply) {
+			try {
+				if (err)
+					throw err;
+
+				if (reply == null) {
+					callback(false);
+					return;
+				}
+
+				for(var i = 0; i < reply.length; i++) {
+					if (Math.floor(reply[i].time / 86400000) == Math.floor(parseInt(time) / 86400000)) 
+						for(var j = 0; j < reply[i].flex.length; j++)
+							if (reply[i].flex[j].grade == grade && reply[i].flex[j].price == price) {
+								callback(true, null);
+								return;
+				}
+							}
+				for(var i = 0; i < reply.length; i++) 
+					if (reply[i].time == parseInt(time)) {
+						callback(false, true);
+						return;
+					}
+
+				callback(false, false);
+            }
+			catch(err) {
+				console.log(err);
+			    callback(-1);
+			}
+		});
+	};
+
+	FlightDAO.prototype.addFlight = function(flightId, departure, destination, time, grade, number, price, callback) {
+		var that = this;
+		
+		this.isExist(flightId, time, grade, price, function(result, push) {
+			if (result) {
+				callback({
+            		success : false
+            	});
+            	return;
+			}
+			
+			if (push)
+			    database.collection(that.collection).update({
+			    	flightId : flightId,
+			    	time : time
+			    }, { $push:{ flex : {
+						grade : grade,
+						number : number,	
+						price : price,
+						remain : number
+				} } }, function(err, reply) {
+			    	try {
+						if (err)
+							throw err;
+
+						if (reply.result.ok == 1)
+			            	callback({
+			            		success : true
+			            	});
+			            else
+			            	callback({
+			            		success : false
+			            	});
+		            }
+					catch(err) {
+						console.log(err);
+					    callback(-1);
+					}
+		        });
+			else 
+				database.collection(that.collection).insertOne({
+			    	flightId : flightId,
+			    	departure : departure,
+			    	destination : destination,
+			    	time : time,
+			    	flex : [{
+						grade : grade,
+						number : number,	
+						price : price,
+						remain : number
+					}]
+				}, function(err, reply) {
+			    	try {
+						if (err)
+							throw err;
+
+						if (reply.result.ok == 1)
+			            	callback({
+			            		success : true
+			            	});
+			            else
+			            	callback({
+			            		success : false
+			            	});
+		            }
+					catch(err) {
+						console.log(err);
+					    callback(-1);
+					}
+		        });
+		});
+	};
+
+	FlightDAO.prototype.deleteFlight = function(flightId, time, grade, price, callback) {
+		var that = this;
+		database.collection(this.collection).find({
+	    	flightId : flightId,
+	    	time : time 
+	    }, { _id : false, flex : true }).toArray(function(err, reply) {
+	    	try {
+				if (err)
+					throw err;
+
+				if (reply != null)
+					for(var i = 0; i < reply.length; i++)
+						for (var j = 0; j < reply[i].flex.length; j++)
+							if (reply[i].flex[j].grade == grade && reply[i].flex[j].price == price) {	
+								if (reply[i].flex.length > 1)
+									database.collection(that.collection).update({
+								    	flightId : flightId,
+								    	time : time 
+								    }, { $pull:{ flex : {
+											grade : grade,	
+											price : price
+									} } }, function(err, reply) {
+								    	try {
+											if (err)
+												throw err;
+
+											if (reply.result.ok == 1)
+								            	callback({
+								            		success : true
+								            	});
+								            else
+								            	callback({
+								            		success : false
+								            	});
+							            }
+										catch(err) {
+											console.log(err);
+										    callback(-1);
+										}
+							        });
+								else 
+									database.collection(that.collection).remove({
+								    	flightId : flightId,
+								    	time : time 
+								    }, function(err, reply) {
+								    	try {
+											if (err)
+												throw err;
+
+											if (reply.result.ok == 1)
+								            	callback({
+								            		success : true
+								            	});
+								            else
+								            	callback({
+								            		success : false
+								            	});
+							            }
+										catch(err) {
+											console.log(err);
+										    callback(-1);
+										}
+							        });
+
+								return;
+							}
+				callback({
+            		success : false
+            	});
+            }
+			catch(err) {
+				console.log(err);
+			    callback(-1);
+			}
+        });
+	};
+
+	FlightDAO.prototype.updateFlight = function(flightId, departure, destination, time1, grade1, price1, time2, grade2, number2, price2, callback) {
+		var that = this;
+		this.deleteFlight(flightId, time1, grade1, price1, function(result) {
+			if (result.success == true)
+				that.addFlight(flightId, departure, destination, time2, grade2, number2, price2, function(result) {
+					callback(result);
+				})
+		});
+	}
 }

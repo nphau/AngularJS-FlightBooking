@@ -28,5 +28,6 @@ mongoClient.connect(config.MongoUrl, function (err, db) {
 require('./Controller/FlightController.js')(app);
 require('./Controller/FlightDetailController.js')(app);
 require('./Controller/BookingController.js')(app);
+require('./Controller/AdminController.js')(app);
 
 app.listen(PORT);  

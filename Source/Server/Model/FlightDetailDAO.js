@@ -17,6 +17,7 @@ module.exports = function() {
 	            callback(result);
             }
 			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });
@@ -32,6 +33,7 @@ module.exports = function() {
 	            callback(reply);
             }
 			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });
@@ -57,6 +59,7 @@ module.exports = function() {
 	            	callback(-1);
             }
 			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });
@@ -81,6 +84,7 @@ module.exports = function() {
 	            	callback(-1);
             }
 			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });
@@ -101,6 +105,43 @@ module.exports = function() {
 	            	callback(-1);
             }
 			catch(err) {
+				console.log(err);
+			    callback(-1);
+			}
+        });
+	};
+
+	FlightDetailDAO.prototype.getAll = function(callback) {
+	    database.collection(this.collection).find({},{ _id : false }).toArray(function(err, reply) {
+	    	try {
+				if (err)
+					throw err;
+
+				var result = [];
+
+				for(var i = 0; i < reply.length; i++) 
+					result[reply[i].bookingId] = reply[i];
+
+	            callback(result);
+            }
+			catch(err) {
+				console.log(err);
+			    callback(-1);
+			}
+        });
+	};
+
+	FlightDetailDAO.prototype.getFlightDetailById = function(bookingId, callback) {
+	    database.collection(this.collection).findOne({ bookingId : bookingId },
+	    { _id : false }, function(err, reply) {
+	    	try {
+				if (err)
+					throw err;
+				
+	            callback(reply);
+            }
+			catch(err) {
+				console.log(err);
 			    callback(-1);
 			}
         });
