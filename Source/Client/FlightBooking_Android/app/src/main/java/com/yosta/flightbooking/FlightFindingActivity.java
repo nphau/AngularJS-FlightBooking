@@ -2,9 +2,7 @@ package com.yosta.flightbooking;
 
 import android.databinding.DataBindingUtil;
 import android.text.TextUtils;
-import android.util.Pair;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -13,23 +11,17 @@ import com.yosta.flightbooking.base.ActivityBehavior;
 import com.yosta.flightbooking.config.AppConfig;
 import com.yosta.flightbooking.databinding.ActivityFlightFindingBinding;
 import com.yosta.flightbooking.helper.DatePickerFragment;
+import com.yosta.flightbooking.helper.utils.AppUtils;
 import com.yosta.flightbooking.helper.utils.SharedPresUtils;
-import com.yosta.flightbooking.model.airport.Airport;
 import com.yosta.flightbooking.model.airport.Airports;
 import com.yosta.flightbooking.model.flight.Flight;
 import com.yosta.flightbooking.model.flight.Flights;
-import com.yosta.flightbooking.networking.FlightBookingAPI;
 import com.yosta.flightbooking.networking.IFlightBookingAPI;
 import com.yosta.materialdialog.ProgressDialog;
 import com.yosta.materialdialog.TextInputDialog;
 import com.yosta.materialspinner.MaterialSpinner;
 
 import java.net.HttpURLConnection;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -58,7 +50,6 @@ public class FlightFindingActivity extends ActivityBehavior {
     private ProgressDialog progressDialog = null;
     private DatePickerFragment datePickerFragment;
 
-    private Map<String, String> mParams = null;
     private Airports mDepartAirports = null, mArriveAirports = null;
     private final Flight mFlight = Flight.getDefault();
 
@@ -78,7 +69,6 @@ public class FlightFindingActivity extends ActivityBehavior {
         ButterKnife.bind(this);
         ((AppConfig) getApplication()).getNetComponent().inject(this);
 
-        this.mParams = new HashMap<>();
         datePickerFragment = new DatePickerFragment();
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(true);
@@ -140,9 +130,9 @@ public class FlightFindingActivity extends ActivityBehavior {
                 @Override
                 public void onResponse(Call<Airports> call, Response<Airports> response) {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
-                        mDepartAirports = response.body();
-                        if (mDepartAirports.hasValue()) {
-                            spinnerArrive.setItems(mDepartAirports.getList());
+                        mArriveAirports = response.body();
+                        if (mArriveAirports.hasValue()) {
+                            spinnerArrive.setItems(mArriveAirports.getList());
                             spinnerArrive.setSelectedIndex(0);
                         }
                     }
@@ -171,11 +161,18 @@ public class FlightFindingActivity extends ActivityBehavior {
                 switch (code) {
                     case HttpURLConnection.HTTP_OK: {
                         Flights flights = response.body();
-                        /*sharedPresUtils.removeSettings(SharedPresUtils.KEY_ARRIVE_TIME,
+                        sharedPresUtils.removeSettings(
+                                SharedPresUtils.KEY_ARRIVE_TIME,
                                 SharedPresUtils.KEY_DEPART_TIME);
-
+                        flights.setArrive(mFlight.getArriveAirport());
+                        flights.setDepart(mFlight.getDepartAirport());
                         progressDialog.dismiss();
-                        AppUtils.sendObjectThroughBundle(FlightFindingActivity.this, BookActivity.class, SharedPresUtils.KEY_FLIGHTS, flights, true);*/
+                        AppUtils.sendObjectThroughBundle(
+                                FlightFindingActivity.this,
+                                BookActivity.class,
+                                SharedPresUtils.KEY_FLIGHTS,
+                                flights,
+                                true);
                         break;
                     }
                     case HttpURLConnection.HTTP_BAD_GATEWAY: {
@@ -195,9 +192,14 @@ public class FlightFindingActivity extends ActivityBehavior {
     @OnClick(R.id.button_ok)
     public void onFind() {
 
+        int arriveIndex = spinnerArrive.getSelectedIndex();
+        int departIndex = spinnerDepart.getSelectedIndex();
 
-        int arriveIndex = spinnerArrive.getSelectedItemPosition();
-        int departIndex = spinnerArrive.getSelectedItemPosition();
+        if (mArriveAirports == null || mDepartAirports == null || !mDepartAirports.hasValue() || !mArriveAirports.hasValue()) {
+            return;
+        }
+        mFlight.setArriveAirport(mArriveAirports.getAirport(arriveIndex));
+        mFlight.setDepartAirport(mDepartAirports.getAirport(departIndex));
 
         long departTime = this.sharedPresUtils.getSettingLong(SharedPresUtils.KEY_DEPART_TIME);
         long arriveTime = this.sharedPresUtils.getSettingLong(SharedPresUtils.KEY_ARRIVE_TIME);
@@ -231,27 +233,20 @@ public class FlightFindingActivity extends ActivityBehavior {
                     .setTitle("Adults")
                     .setTopTitle("")
                     .setMessage("How many tickets you want to book?")
-                    .setConfirmButton(android.R.string.ok, new TextInputDialog.OnTextInputConfirmListener() {
-                        @Override
-                        public void onTextInputConfirmed(String text) {
-                            int maxAdults = Integer.parseInt(text);
-                            mFlight.setAdults(maxAdults);
-                            mFlight.setChildren(maxAdults * 2);
-                        }
-
+                    .setConfirmButton(android.R.string.ok, text -> {
+                        int maxAdults = Integer.parseInt(text);
+                        mFlight.setAdults(maxAdults);
+                        mFlight.setChildren(maxAdults * 2);
                     })
-                    .setInputFilter("6 adults are maximum.", new TextInputDialog.TextFilter() {
-                        @Override
-                        public boolean check(String text) {
-                            boolean res = false;
-                            if (text.matches("\\d+")) {
-                                int maxAdults = Integer.parseInt(text);
-                                if (maxAdults > 0 && maxAdults < 7) {
-                                    res = true;
-                                }
+                    .setInputFilter("6 adults are maximum.", text -> {
+                        boolean res = false;
+                        if (text.matches("\\d+")) {
+                            int maxAdults = Integer.parseInt(text);
+                            if (maxAdults > 0 && maxAdults < 7) {
+                                res = true;
                             }
-                            return res;
                         }
+                        return res;
                     }).show();
         }
         if (view.getId() == R.id.txt_children) {
@@ -260,24 +255,17 @@ public class FlightFindingActivity extends ActivityBehavior {
                     .setTitle("Children")
                     .setTopTitle("")
                     .setMessage("How many tickets you want to book?")
-                    .setConfirmButton(android.R.string.ok, new TextInputDialog.OnTextInputConfirmListener() {
-                        @Override
-                        public void onTextInputConfirmed(String text) {
-                            int maxChildren = Integer.parseInt(text);
-                            mFlight.setChildren(maxChildren);
-                        }
-
+                    .setConfirmButton(android.R.string.ok, text -> {
+                        int maxChildren = Integer.parseInt(text);
+                        mFlight.setChildren(maxChildren);
                     })
-                    .setInputFilter((mFlight.getAdults() * 2) + " is maximum.", new TextInputDialog.TextFilter() {
-                        @Override
-                        public boolean check(String text) {
-                            boolean res = false;
-                            if (text.matches("\\d+")) {
-                                int maxChildren = Integer.parseInt(text);
-                                res = (maxChildren >= 0 && maxChildren <= mFlight.getAdults() * 2);
-                            }
-                            return res;
+                    .setInputFilter((mFlight.getAdults() * 2) + " is maximum.", text -> {
+                        boolean res = false;
+                        if (text.matches("\\d+")) {
+                            int maxChildren = Integer.parseInt(text);
+                            res = (maxChildren >= 0 && maxChildren <= mFlight.getAdults() * 2);
                         }
+                        return res;
                     }).show();
         }
     }

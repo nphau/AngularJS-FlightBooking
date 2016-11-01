@@ -11,11 +11,11 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
 
 import com.yosta.flightbooking.adapter.GradeInfoAdapter;
 import com.yosta.flightbooking.binding.viewmodel.FlightVM;
+import com.yosta.flightbooking.config.AppConfig;
 import com.yosta.flightbooking.databinding.ActivityBookBinding;
 import com.yosta.flightbooking.dialog.DialogFlight;
 import com.yosta.flightbooking.helper.utils.AppUtils;
@@ -47,6 +47,7 @@ public class BookActivity extends AppCompatActivity {
 
 
     private Flights mFlights = null;
+
     private String mBookingId = null;
     private Flight mCurrentFlight = null;
     private GradeInfo mCurrGrade = null;
@@ -55,16 +56,16 @@ public class BookActivity extends AppCompatActivity {
     private ProgressDialog progressDialog = null;
 
 
-    /*@Inject
-    SharedPresUtils sharedPresUtils;*/
+    @Inject
     SharedPresUtils sharedPresUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mBinding = DataBindingUtil.setContentView(this, R.layout.activity_book);
         ButterKnife.bind(this);
 
-        /*((AppConfig) getApplication()).getNetComponent().inject(this);*/
+        ((AppConfig) getApplication()).getNetComponent().inject(this);
 
         this.mFlights = new Flights();
 
@@ -75,7 +76,7 @@ public class BookActivity extends AppCompatActivity {
     }
 
     private void onApplyData() {
-        this.mFlights = (Flights) AppUtils.receiveDataThroughBundle(this, "FLIGHTS");
+        this.mFlights = (Flights) AppUtils.receiveDataThroughBundle(this, SharedPresUtils.KEY_FLIGHTS);
         if (mFlights != null && mFlights.size() > 0) {
             gradeInfoAdapter.clear();
             mCurrentFlight = mFlights.get(0);
@@ -121,42 +122,39 @@ public class BookActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(gradeInfoAdapter);
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
-                new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        if (position >= 0 && position < gradeInfoAdapter.getItemCount()) {
-                            mCurrGrade = mCurrentFlight.getGradeInfo().get(position);
+                (recyclerView1, position, v) -> {
+                    if (position >= 0 && position < gradeInfoAdapter.getItemCount()) {
+                        mCurrGrade = mCurrentFlight.getGradeInfo().get(position);
 
-                            final FlightBooking flightBooking = new FlightBooking(
-                                    mBookingId,
-                                    mCurrentFlight.getDepartTime(),
-                                    mCurrGrade.getGrade(),
-                                    mCurrGrade.getPrice(),
-                                    mFlights.getDepart(),
-                                    mFlights.getArrive()
-                            );
-                            SharedPresUtils.saveSetting(BookActivity.this, SharedPresUtils.KEY_BOOKING_FLIGHT, flightBooking);
+                        final FlightBooking flightBooking = new FlightBooking(
+                                mBookingId,
+                                mCurrentFlight.getDepartTime(),
+                                mCurrGrade.getGrade(),
+                                mCurrGrade.getPrice(),
+                                mFlights.getDepart(),
+                                mFlights.getArrive()
+                        );
+                        SharedPresUtils.saveSetting(BookActivity.this, SharedPresUtils.KEY_BOOKING_FLIGHT, flightBooking);
 
-                            new AlertDialog.Builder(BookActivity.this)
-                                    .setTitle("Do you want to book this flight?")
-                                    .setCancelable(false)
-                                    .setMessage(flightBooking.toString())
-                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            progressDialog.show();
-                                            FlightBookingAPI.getInstance(BookActivity.this)
-                                                    .callAPIBookingFlight(mBookingId, flightBooking, bFCallback);
-                                        }
-                                    })
-                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
+                        new AlertDialog.Builder(BookActivity.this)
+                                .setTitle("Do you want to book this flight?")
+                                .setCancelable(false)
+                                .setMessage(flightBooking.toString())
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        progressDialog.show();
+                                        FlightBookingAPI.getInstance(BookActivity.this)
+                                                .callAPIBookingFlight(mBookingId, flightBooking, bFCallback);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                                        }
-                                    })
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .show();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
 
-                        }
                     }
                 }
         );
