@@ -109,16 +109,15 @@ public class Flight extends BaseObservable implements Serializable {
         return new Flight();
     }
 
-    public Airport getDepartAirport() {
-        return mDepartAirport;
-    }
-
     public void setDepartAirport(Airport mDepartAirport) {
         this.mDepartAirport = mDepartAirport;
     }
 
     public Airport getArriveAirport() {
         return mArriveAirport;
+    }
+    public Airport getDepartAirport() {
+        return mDepartAirport;
     }
 
     public void setArriveAirport(Airport mArriveAirport) {
@@ -130,7 +129,7 @@ public class Flight extends BaseObservable implements Serializable {
         Map<String, String> params = new HashMap<>();
 
         params.put("depart", mDepartAirport.getId());
-        //params.put("arrive", mArriveAirport.getId());
+        params.put("arrive", mArriveAirport.getId());
         params.put("time", String.valueOf(mDepartTime));
         params.put("adult", String.valueOf(mAdults));
         params.put("child", String.valueOf(mChildren));
