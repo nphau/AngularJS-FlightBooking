@@ -40,7 +40,9 @@ module.exports = function() {
 								throw err;
 
 							if (reply.result.ok == 1)
-				            	callback(token);
+				            	callback({
+				            		token : token
+				            	});
 				            else 
 				            	callback(null);
 						}

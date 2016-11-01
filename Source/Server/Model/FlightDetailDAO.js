@@ -63,36 +63,11 @@ module.exports = function() {
 			    callback(-1);
 			}
         });
-
-        if (flightId2)
-        	database.collection(this.collection).update({ bookingId : bookingId }, 
-	    	{ $push: { details : {
-	    		flightId : flightId2,
-	    		time : new Date().getTime(), 
-	    		grade : grade, 
-	    		price : price
-	    	} } }, function(err, reply) {
-	    	try {
-				if (err)
-					throw err;
-				
-	            if (reply.result.ok == 1)
-	            	callback({
-	            		success : true
-	            	});
-	            else
-	            	callback(-1);
-            }
-			catch(err) {
-				console.log(err);
-			    callback(-1);
-			}
-        });
 	};
 
-	FlightDetailDAO.prototype.addPassenger = function(bookingId, passenger, callback) {
+	FlightDetailDAO.prototype.addPassenger = function(bookingId, passengers, callback) {
 	    database.collection(this.collection).update({ bookingId : bookingId }, 
-	    	{ $push: { passengers : passenger } }, function(err, reply) {
+	    	{ $set: { passengers : passengers } }, function(err, reply) {
 	    	try {
 				if (err)
 					throw err;

@@ -12,7 +12,7 @@ module.exports = function(app) {
 
     app.get(url + '/flights', function(req, res) {
         if (req.headers['x-access-token'] == null) {
-            res.statusCode = 400;
+            res.statusCode = 401;
             return res.send('Error 401: Missing token.');
         }
 
@@ -42,7 +42,7 @@ module.exports = function(app) {
 
     app.get(url + '/bookings', function(req, res) {
         if (req.headers['x-access-token'] == null) {
-            res.statusCode = 400;
+            res.statusCode = 401;
             return res.send('Error 401: Missing token.');
         }
 
@@ -96,7 +96,7 @@ module.exports = function(app) {
 
     app.get(url + '/bookings/:bookingId', function(req, res) {
         if (req.headers['x-access-token'] == null) {
-            res.statusCode = 400;
+            res.statusCode = 401;
             return res.send('Error 401: Missing token.');
         }
 
@@ -138,7 +138,7 @@ module.exports = function(app) {
 
     app.put(url + '/login', function(req, res) {
         if(!req.body.hasOwnProperty('userId') || !req.body.hasOwnProperty('password')) {
-            res.statusCode = 400;
+            res.statusCode = 401;
             return res.json({
                 error : 'Error 400: Syntax incorrect.'
             });
@@ -164,7 +164,7 @@ module.exports = function(app) {
 
     app.post(url + '/flights', function(req, res) {
         if (req.headers['x-access-token'] == null) {
-            res.statusCode = 400;
+            res.statusCode = 401;
             return res.send('Error 401: Missing token.');
         }
 
@@ -206,7 +206,7 @@ module.exports = function(app) {
 
     app.put(url + '/flights', function(req, res) {
         if (req.headers['x-access-token'] == null) {
-            res.statusCode = 400;
+            res.statusCode = 401;
             return res.send('Error 401: Missing token.');
         }
 
@@ -250,7 +250,7 @@ module.exports = function(app) {
 
     app.delete(url + '/flights', function(req, res) {
         if (req.headers['x-access-token'] == null) {
-            res.statusCode = 400;
+            res.statusCode = 401;
             return res.send('Error 401: Missing token.');
         }
 

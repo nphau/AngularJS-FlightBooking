@@ -2,6 +2,7 @@ module.exports = function() {
 
 	this.BookingDAO = function() {
 		this.collection = 'Booking';
+		this.collection2 = 'FlightDetail';
 	}
 
 	BookingDAO.prototype.generateID = function() {
@@ -37,16 +38,23 @@ module.exports = function() {
 			totalCost : 0,
 			status : 0
 		};
-
+		var that = this;
 	    database.collection(this.collection).insertOne(booking, function(err, reply) {
 	    	try {
 				if (err)
 					throw err;
 				
-				if (reply.result.ok == 1)
+				if (reply.result.ok == 1) {
 	            	callback({
 	            		bookingId : booking.bookingId
 	            	});
+
+	            	database.collection(that.collection2).insertOne({
+	            		bookingId : booking.bookingId,
+	            		details : [],
+	            		passengers : []
+	            	}, function(err, reply) {});
+	            }
 	            else
 	            	callback(-1);
             }
@@ -55,6 +63,7 @@ module.exports = function() {
 			    callback(-1);
 			}
         });
+
 	};
 
 	BookingDAO.prototype.updateStatus = function(bookingId, totalCost, callback) {
