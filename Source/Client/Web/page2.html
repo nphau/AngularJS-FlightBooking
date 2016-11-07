@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Flight</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <style>
+    body {
+        padding-top: 50px;
+    }
+    #next {
+        position:relative;
+        bottom: 10px;
+        left: 0%;
+    }
+    </style>
+    <!-- JS -->
+    <script src="js/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <div class="container" ng-app="sortApp" ng-controller="flightController" data-ng-init="getFlights()">
+        <button id="next" type="button" class="btn btn-primary" ng-click="goBooking()">Danh sách đặt vé</button>
+        <button id="next" type="button" class="btn btn-primary" ng-click="goFlight()">Danh sách Chuyến bay</button>
+        <div class="pull-left">
+            <div class="alert alert-info">
+                <p>Sort Type: {{ sortType }}</p>
+                <p>Sort Reverse: {{ sortReverse }}</p>
+                <p>Search Query: {{ searchFlight }}</p>
+            </div>
+            <form>
+                <div class="form-group col-sm-offset-9">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        <input type="text" class="form-control" placeholder="Search Flight" ng-model="searchFlight">
+                    </div>
+                </div>
+            </form>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <td>
+                            <a href="#" ng-click="sortType = 'id'; sortReverse = !sortReverse"> Mã chuyến bay
+                                <span ng-show="sortType == 'id' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'departure'; sortReverse = !sortReverse"> Sân bay đi
+                                <span ng-show="sortType == 'departure' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'departure' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'destination'; sortReverse = !sortReverse"> Sân bay đến
+                                <span ng-show="sortType == 'destination' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'destination' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'date'; sortReverse = !sortReverse"> Ngày
+                                <span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'time'; sortReverse = !sortReverse"> Giờ
+                                <span ng-show="sortType == 'time' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'time' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'grade'; sortReverse = !sortReverse"> Hạng
+                                <span ng-show="sortType == 'grade' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'grade' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'price'; sortReverse = !sortReverse"> Gía
+                                <span ng-show="sortType == 'price' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'price' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" ng-click="sortType = 'seat'; sortReverse = !sortReverse"> Số ghế
+                                <span ng-show="sortType == 'seat' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'seat' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </td>
+                        <td> Thao tac
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="flight in flights | orderBy:sortType:sortReverse | filter:searchFlight track by $index" ng-include="getTemplate(flight)">
+                        <script type="text/ng-template" id="display">
+                            <td>{{ flight.idShow  }}</td>
+                            <td>{{ flight.departure }}</td>
+                            <td>{{ flight.destination }}</td>
+                            <td>{{ flight.date }}</td>
+                            <td>{{ flight.time }}</td>
+                            <td>{{ flight.grade }}</td>
+                            <td>{{ flight.price }}</td>
+                            <td>{{ flight.seat }}</td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-edit" ng-click="editFlight(flight)">Edit </button>
+                                <button type="button" class="btn btn-danger btn-delete" ng-click="deleteFlight(flight)">Delete </button>
+                            </td>
+                        </script>
+                        <script type="text/ng-template" id="edit">
+                            <td>
+                                <input type="text" ng-model=selected.id class="form-control input-sm" />
+                            </td>
+                                
+                            <td>
+                                <input type="text" ng-model=selected.departure class="form-control input-sm" />
+                            </td>
+                            <td>
+                                <input type="text" ng-model=selected.destination class="form-control input-sm" />
+                            </td>
+                            <td>
+                                <input type="text" ng-model=selected.date class="form-control input-sm" />
+                            </td>
+                            <td>
+                                <input type="text" ng-model=selected.time class="form-control input-sm" />
+                            </td>
+                            <td>
+                                <input type="text" ng-model=selected.grade class="form-control input-sm" />
+                            </td>
+                            <td>
+                                <input type="text" ng-model=selected.price class="form-control input-sm" />
+                            </td>
+                            <td>
+                                <input type="text" ng-model=selected.seat class="form-control input-sm" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary" ng-click="updateFlight(flight)">Save</button>
+                                <button type="button" class="btn btn-danger" ng-click="reset()">Cancel</button>
+                            </td>
+                        </script>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pull-right" ng-show="flights.length>0">
+            <form name="form-inline" novalidate>
+                <div class="form-group col-sm-5">
+                    <label>Mã chuyến bay</label>
+                    <input id="flightId" type="text" class="form-control" placeholder="Mã chuyến bay" ng-model="id" required>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label>Sân bay đi</label>
+                    <input id="departure" type="text" name="departure" class="form-control" placeholder="Tên sân bay - Mã" ng-model="departure" required>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label>Sân bay đến</label>
+                    <input id="destination" type="text" name="destination" class="form-control" placeholder="Tên sân bay - Mã" ng-model="destination" required>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label>Ngày</label>
+                    <input id="date" type="text" name="date" class="form-control" placeholder="dd/mm/yyyy" ng-model="date" required>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label>Giờ</label>
+                    <input id="hour" type="text" name="time" class="form-control" placeholder="hh:mm" ng-model="time" required>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label>Hạng</label>
+                    <input id="grade" type="text" name="grade" class="form-control" placeholder="Hạng chuyến bay" ng-model="grade" required>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label>Gía</label>
+                    <input id="price" type="text" name="price" class="form-control" placeholder="Giá vé" ng-model="price" required>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label>Số ghế</label>
+                    <input id="number" type="text" name="seat" class="form-control" placeholder="Số ghế" ng-model="seat" required>
+                </div>
+                <div class="form-group col-sm-offset-4 col-sm-6">
+                    <button type="button" class="btn btn-primary" ng-click="addFlight()" ng-disabled="form.$invalid">Add Flight</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

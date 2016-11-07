@@ -265,15 +265,16 @@ module.exports = function(app) {
                 return res.send('Error 401: Token expries.');
             }
 
-            if(!req.body.hasOwnProperty('flightId') || !req.body.hasOwnProperty('time') ||
+            /*if(!req.body.hasOwnProperty('flightId') || !req.body.hasOwnProperty('time') ||
                 !req.body.hasOwnProperty('grade') || !req.body.hasOwnProperty('price')) {
                 res.statusCode = 400;
                 return res.json({
                     error : 'Error 400: Syntax incorrect.'
                 });
-            }
+            }*/
 
-            flightDAO.deleteFlight(req.body.flightId, req.body.time, req.body.grade, req.body.price, function(result) {
+            flightDAO.deleteFlight(req.query.flightId, parseInt(req.query.time), req.query.grade, 
+                parseInt(req.query.price), function(result) {
                 if (result == -1) {
                     res.statusCode = 500;
                     return res.json({

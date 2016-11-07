@@ -1,0 +1,4 @@
+{'_id': ObjectId("580f56f33af2403c9bc2294d"),'bookingId': 'C9J7SW','time': NumberLong(1477400307944),'totalCost': 630000,'status': 1}
+{'_id': ObjectId("580f57243af2403c9bc2294f"),'bookingId': 'YF548N','time': NumberLong(1477400356973),'totalCost': 600000,'status': 1}
+{'_id': ObjectId("580f5b233af2403c9bc22951"),'bookingId': 'KMO4WQ','time': NumberLong(1477401379714),'totalCost': 1050000,'status': 1}
+{'_id': ObjectId("580f5b7f3af2403c9bc22953"),'bookingId': '9OVJ3T','time': NumberLong(1477401471549),'totalCost': 600000,'status': 1}

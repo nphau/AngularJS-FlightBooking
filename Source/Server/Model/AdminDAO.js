@@ -34,23 +34,9 @@ module.exports = function() {
 						userId : userId, 
 						password : password
 					});
-					database.collection(that.collection).update({ userId : userId }, { $set:{ token : token } }, function(err, reply) {
-						try{
-							if (err)
-								throw err;
-
-							if (reply.result.ok == 1)
-				            	callback({
-				            		token : token
-				            	});
-				            else 
-				            	callback(null);
-						}
-						catch(err) {
-							console.log(err);
-						    callback(-1);
-						}	
-					});
+					callback({
+	            		token : token
+	            	});
 				}
 				else 
 					callback(null);
